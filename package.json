@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "start": "cd mern && npm install && node app.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "engines": {
+    "node": "14.15.4",
+    "npm": "6.14.10"
+  }
+}
