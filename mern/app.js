@@ -48,7 +48,7 @@ app.use('/api/values', values);
 app.use('/api/goals', goals);
 
 // changed '/' to '/api' to prevent conflict on heroku
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   //console.log('id:', req.session)
   console.log('server port', process.env.PORT);
   if (req.session.userId) {

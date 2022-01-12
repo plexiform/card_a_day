@@ -102,12 +102,12 @@ class CreateSchedule extends React.Component {
     }
 
     axios
-      .post('http://localhost:8082/api/schedules', data, {
+      .post('/api/schedules', data, {
         withCredentials: true
       })
       .then(res => {
         // res.data._id
-        axios.put(`http://localhost:8082/api/goals/`, { goal: data.goal, schedId: res.data._id })
+        axios.put(`/api/goals/`, { goal: data.goal, schedId: res.data._id })
           .catch(err => console.log(err));
       })
       .then(res => {

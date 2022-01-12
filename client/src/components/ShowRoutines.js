@@ -13,7 +13,7 @@ class ShowRoutines extends React.Component {
 
   componentDidMount() {
 
-    axios.get('http://localhost:8082/api/routines', {
+    axios.get('/api/routines', {
       headers: {
         'Authorization': `Basic ${this.context[0].username}:${this.context[0].password}`
       },

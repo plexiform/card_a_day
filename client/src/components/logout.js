@@ -16,7 +16,7 @@ class Logout extends React.Component {
   clearUser = (e) => {
     e.preventDefault();
     axios
-      .post('http://localhost:8082/logout', {}, {
+      .post('/logout', {}, {
         headers: {
           'Authorization': `Basic ${this.context[0].username}:${this.context[0].password}`,
           'Content-Type': 'application/json'
