@@ -25,7 +25,7 @@ class CreateRoutine extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/values', {
+    axios.get('http://localhost:8082/api/values', {
       withCredentials: true
     }).then(res => {
       this.setState({
@@ -81,7 +81,7 @@ class CreateRoutine extends React.Component {
 
     //console.log(this.context[0].username);
     axios
-      .post('/api/routines', data,
+      .post('http://localhost:8082/api/routines', data,
         {
           headers: {
             'Authorization': `Basic ${this.context[0].username}:${this.context[0].password}`

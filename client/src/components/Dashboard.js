@@ -10,7 +10,7 @@ export default function Dashboard() {
 
   function handleValueSubmit(e) {
     e.preventDefault();
-    axios.post('/api/values',
+    axios.post('http://localhost:8082/api/values',
       {
         value: value,
         reason: valueReason
@@ -26,7 +26,7 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    axios.get('/api/values',
+    axios.get('http://localhost:8082/api/values',
       {
         withCredentials: true
       }).then(res => {
@@ -35,7 +35,7 @@ export default function Dashboard() {
   }, [value]);
 
   useEffect(() => {
-    axios.get('/api/goals',
+    axios.get('http://localhost:8082/api/goals',
       {
         withCredentials: true
       }).then(res => {
@@ -47,7 +47,7 @@ export default function Dashboard() {
   function handleGoalSubmit(e) {
     e.preventDefault();
 
-    axios.post('/api/goals',
+    axios.post('http://localhost:8082/api/goals',
       {
         goal: goal
       },
@@ -63,7 +63,7 @@ export default function Dashboard() {
 
 
   function handleDelete(id) {
-    axios.delete('/api/values/' + id)
+    axios.delete('http://localhost:8082/api/values/' + id)
       .then(res => {
 
       })

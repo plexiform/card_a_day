@@ -14,7 +14,7 @@ class ShowSchedule extends React.Component {
 
   componentDidMount() {
 
-    axios.get('/api/schedules',
+    axios.get('http://localhost:8082/api/schedules',
       {
         headers: {
           'Authorization': `Basic ${this.context[0].username}:${this.context[0].password}`

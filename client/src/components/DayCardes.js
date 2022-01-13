@@ -5,6 +5,7 @@ import SchedCard from "./SchedCard";
 import Tabs from './Tabs';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import Morning from "./Morning";
 
 const CardStyle = styled.div`
     display: inline-block;
@@ -47,7 +48,7 @@ export default function DayCardes() {
   const [trigger, setTrigger] = useState(false);
 
   useEffect(() => {
-    axios.get('/api/cards',
+    axios.get('http://localhost:8082/api/cards',
       {
         withCredentials: true
       }).then((res) => {
@@ -88,6 +89,11 @@ export default function DayCardes() {
     })
   }, [cards])
 
+
+  function handleClick(e) {
+
+  }
+
   // argument: cards is an Object of Date's {}
   function generateMonthlyCardList(cards) {
 
@@ -119,11 +125,7 @@ export default function DayCardes() {
 
       const currentRoutines = cards[card].routines.map((routine, id) => {
         return (
-          <div id={id}>
-            <b>Gratitude:</b> {routine.routineItems.gratitude}
-            <br />
-            <b>Values:</b> {routine.routineItems.values}
-          </div>
+          <Morning routine={routine} />
         )
       });
 
@@ -152,16 +154,8 @@ export default function DayCardes() {
       return (
         <CardStyle id={id} percent={cardPercent[card]} current={card === splitDate(new Date())[0]}>
           <div>⤡<i style={{ float: 'right' }}>{card}</i></div><br />
-          <div
-            style={{
-              maxHeight: '70px',
-              overflow: 'scroll',
-              color: "black",
-              backgroundImage: 'linear-gradient(to left, rgba(255,0,0,0), lightgreen'
-            }}
-          >
-            {currentRoutines}
-          </div>
+
+          {currentRoutines}
           {totalMins[card] > 0 ?
             <div
               style={{

@@ -39,7 +39,7 @@ class SchedCard extends React.Component {
     console.log('datafin', this.state.finished)
 
     axios
-      .put(`/api/schedules/${data.id}`, data)
+      .put(`http://localhost:8082/api/schedules/${data.id}`, data)
       .then(res => {
         console.log('put state', this.state)
       })

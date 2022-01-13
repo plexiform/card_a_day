@@ -16,7 +16,7 @@ class PrivateRoute extends React.Component {
   }
 
   async componentDidMount() {
-    axios.get('/api', {
+    axios.get('http://localhost:8082/api', {
       headers: {
         'Content-Type': 'application/json'
       },

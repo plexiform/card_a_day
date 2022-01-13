@@ -7,7 +7,7 @@ export default function LoginContainer(props) {
   const [isLoggedIn, setLog] = useState(false);
   const [isLoading, setLoad] = useState(true);
   useEffect(() => {
-    axios.get('/api',
+    axios.get('http://localhost:8082/api',
       {
         withCredentials: true
       }).then((res) => {
