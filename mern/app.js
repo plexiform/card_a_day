@@ -46,6 +46,7 @@ app.use('/api/routines', routines);
 app.use('/api/schedules', schedules);
 app.use('/api/values', values);
 app.use('/api/goals', goals);
+app.use('/api/journals', journals); // access to journals + threeGoodThings entries
 
 // changed '/' to '/api' to prevent conflict on heroku
 app.get('/api', (req, res) => {

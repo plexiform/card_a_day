@@ -16,6 +16,62 @@ body {
   height:100%;
 }
 
+textarea:focus {
+  outline: none;
+  color:#bdbdbd
+}
+
+textarea {
+  background:transparent;
+  resize: none;
+}
+
+input {
+  border: 0;
+  outline: 0;
+  color: #bdbdbd;
+  background: transparent;
+  border-bottom: 1px solid black;
+  border-color:#bdbdbd;
+}
+
+
+.valueButton {
+  visibility:hidden;
+}
+
+.valueButton:checked ~ #valueLabel  {
+  background-color:green;
+}
+
+#valueLabel {
+  padding:2px 10px 2px 10px;
+  border-radius:20px;
+  background-color:gray;
+}
+
+#valueLabel:hover {
+  background-color: #2c2c2c;
+  transition: .2s 
+}
+
+
+button {
+  background:black;
+  color:#bdbdbd;
+  box-shadow: none;
+  border: 1px solid white
+}
+
+button:hover {
+  background-color:#bdbdbd;
+  color:black;
+}
+
+.date-entry {
+  background:#bdbdbd;
+  color:black;
+}
 
 .tab {
   text-transform:uppercase;

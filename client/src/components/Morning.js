@@ -15,20 +15,19 @@ const ExpanderStyle = styled.div`
 
 export default function Morning(props) {
   const [collapsed, setCollapsed] = useState(false);
+  const routine = props.routine.routineItems;
 
   return (
-    <>
+    <div>
       <ExpanderStyle onClick={() => setCollapsed(!collapsed)}>
-        Click for morning routine~
+        + Routine
       </ExpanderStyle>
       <CollapsibleStyle collapsed={collapsed}>
-        <b>Gratitude:</b> {props.routine.routineItems.gratitude}
+        <b>Gratitude:</b> {routine.gratitude}
         <br />
-        <b>Values:</b> {props.routine.routineItems.values}
+        <b>Values:</b> {routine.values}
       </CollapsibleStyle>
-    </>
-
-
-
+    </div>
   )
+
 }

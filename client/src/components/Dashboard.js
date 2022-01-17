@@ -81,19 +81,26 @@ export default function Dashboard() {
   return (
     <div style={{
       display: 'grid',
-      gridColumns: '1fr 1fr'
+      gridColumns: '1fr 1fr',
+
     }}>
       <div>
         <h1>Goals</h1>
-        <div>
+        <div style={{
+          display: 'grid',
+          gridColumns: '1fr 1fr',
+          maxHeight: 100,
+          overflow: 'auto'
+        }}>
           {goalList.map((goal, id) => {
 
             return (
-              <div>{goal.goalName}</div>
+              <div id={id}>{goal.goalName}</div>
             )
 
           })}
         </div>
+
         <form noValidate onSubmit={handleGoalSubmit}>
           <input
             type="text"

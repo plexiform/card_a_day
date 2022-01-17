@@ -90,7 +90,7 @@ export default function Layout({ children }) {
             }}
             to='/welcome'
           >
-            CARD!
+            WARD!
           </Link>
           <LogoutStyle><LeftNav><NavLink to='/dashboard'>Dashboard</NavLink></LeftNav><Logout /></LogoutStyle>
         </TopBar>

@@ -15,7 +15,8 @@ class CreateSchedule extends React.Component {
       numPomos: 0,
       maxPomos: '',
       getGoals: [],
-      goal: ''
+      goal: '',
+      confirmed: false
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -23,6 +24,8 @@ class CreateSchedule extends React.Component {
     this.handleEndTime = this.handleEndTime.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+    this.getMaxPomos = this.getMaxPomos.bind(this);
+    this.setMaxPomos = this.setMaxPomos.bind(this);
   }
 
   componentDidMount() {
@@ -41,25 +44,76 @@ class CreateSchedule extends React.Component {
 
   handleChange = e => {
     this.setState({
-      [e.target.name]: e.target.value
-    });
+      [e.target.name]: e.target.value,
+      confirmed: false
+    })
   }
 
   handleStartTime = e => {
-    this.setState({ startTime: e.target.value });
+    this.setState(
+      {
+        startTime: e.target.value,
+        confirmed: false
+      });
+
   }
 
   handleEndTime = e => {
-    this.setState({ endTime: e.target.value });
+    this.setState(
+      {
+        endTime: e.target.value,
+        confirmed: false
+      });
   }
 
   handleSelect = e => {
     this.setState({ goal: e.target.value });
-    console.log('sip');
+  }
+
+  getMaxPomos = (totalMinutes, pomoLength, breakLength) => {
+    /*
+    let totalPomosNoBreaks = totalMinutes / pomoLength;
+    let numberOfBreaks = totalPomosNoBreaks > 1 ? totalPomosNoBreaks - 1 : 0;
+    let minutesOfBreaks = numberOfBreaks * breakLength;
+   
+    return Math.floor((totalMinutes - minutesOfBreaks) / pomoLength);
+    */
+    let timePassed = 0;
+    let pomoCount = 0;
+    // !!! bug: still adds a pomo even if there's less than the allotted pomo time left
+    while (timePassed < totalMinutes && (totalMinutes - timePassed >= Number(pomoLength))) {
+      timePassed += Number(pomoLength);
+      pomoCount += 1;
+      if ((timePassed + Number(breakLength)) < totalMinutes) {
+        timePassed += Number(breakLength);
+      }
+    }
+
+    return pomoCount;
+  }
+
+  setMaxPomos = () => {
+    if (this.state.startTime && this.state.endTime) {
+      function convertMilliToMinutes(ms) {
+        return (ms / 1000) / 60;
+      }
+
+      const millisecondsBetween = Date.parse(this.state.endTime) - Date.parse(this.state.startTime);
+      const minutesBetween = convertMilliToMinutes(millisecondsBetween);
+
+      const maxPomos = this.getMaxPomos(minutesBetween, this.state.pomoLength, this.state.breakLength);
+
+      this.setState({
+        maxPomos: maxPomos,
+        confirmed: true // this is a temporary measure for the 'calculate button'
+      })
+    }
   }
 
   handleSubmit = e => {
     e.preventDefault();
+
+    // !!! bring in setMaxPomos() here
     function convertMilliToMinutes(ms) {
       return (ms / 1000) / 60;
     }
@@ -67,29 +121,7 @@ class CreateSchedule extends React.Component {
     const millisecondsBetween = Date.parse(this.state.endTime) - Date.parse(this.state.startTime);
     const minutesBetween = convertMilliToMinutes(millisecondsBetween);
 
-    function getMaxPomos(totalMinutes, pomoLength, breakLength) {
-      /*
-      let totalPomosNoBreaks = totalMinutes / pomoLength;
-      let numberOfBreaks = totalPomosNoBreaks > 1 ? totalPomosNoBreaks - 1 : 0;
-      let minutesOfBreaks = numberOfBreaks * breakLength;
-  
-      return Math.floor((totalMinutes - minutesOfBreaks) / pomoLength);
-      */
-      let timePassed = 0;
-      let pomoCount = 0;
-      // !!! bug: still adds a pomo even if there's less than the allotted pomo time left
-      while (timePassed < totalMinutes && (totalMinutes - timePassed >= Number(pomoLength))) {
-        timePassed += Number(pomoLength);
-        pomoCount += 1;
-        if ((timePassed + Number(breakLength)) < totalMinutes) {
-          timePassed += Number(breakLength);
-        }
-      }
-
-      return pomoCount;
-    }
-
-    const maxPomos = getMaxPomos(minutesBetween, this.state.pomoLength, this.state.breakLength);
+    const maxPomos = this.getMaxPomos(minutesBetween, this.state.pomoLength, this.state.breakLength);
 
     const data = {
       startTime: this.state.startTime,
@@ -166,6 +198,7 @@ class CreateSchedule extends React.Component {
             <div>
               <div>Start time:</div>
               <input
+                className="date-entry"
                 style={{ width: '100%' }}
                 type='datetime-local'
                 onChange={this.handleStartTime}
@@ -177,6 +210,7 @@ class CreateSchedule extends React.Component {
             <div style={{ gridColumn: 2 }}>
               <div>End time:</div>
               <input
+                className="date-entry"
                 style={{ width: '100%' }}
                 type='datetime-local'
                 onChange={this.handleEndTime}
@@ -207,6 +241,17 @@ class CreateSchedule extends React.Component {
               onChange={this.handleChange}
             />
           </div>
+
+          {this.state.confirmed ?
+            <div style={{ gridColumnStart: 1 }}>room for {this.state.maxPomos} pomos max</div>
+            :
+            <button
+              type="button"
+              onClick={this.setMaxPomos}
+              style={{ gridColumnStart: 1 }}>
+              calculate (wip)
+            </button>
+          }
 
           <button
             type='submit'

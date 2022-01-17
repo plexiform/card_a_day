@@ -94,22 +94,20 @@ export default function DayCardes() {
 
   }
 
-  // argument: cards is an Object of Date's {}
-  function generateMonthlyCardList(cards) {
+  function splitDate(dateArg) {
+    const tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    const date = (new Date(new Date(dateArg).getTime() - tzoffset)).toISOString();
 
-    function splitDate(dateArg) {
-      const tzoffset = (new Date()).getTimezoneOffset() * 60000;
-      const date = (new Date(new Date(dateArg).getTime() - tzoffset)).toISOString();
+    let splitT = date.split("T");
+    let day = splitT[0];
+    let longTime = splitT[1];
+    let shortTime = longTime.substr(0, 5);
 
-      let splitT = date.split("T");
-      let day = splitT[0];
-      let longTime = splitT[1];
-      let shortTime = longTime.substr(0, 5);
+    return [day, shortTime];
 
-      return [day, shortTime];
+  };
 
-    };
-
+  function orderKeys(cards) {
     const orderedKeys = Object.keys(cards).sort((a, b) => {
       const [aYear, aMonth, aDay] = a.split('-');
       const [bYear, bMonth, bDay] = b.split('-');
@@ -118,6 +116,13 @@ export default function DayCardes() {
 
       return aDate - bDate;
     });
+
+    return orderedKeys;
+  }
+
+  // argument: cards is an Object of Date's {}
+  function generateMonthlyCardList(cards) {
+    const orderedKeys = orderKeys(cards);
 
     const cardsList = orderedKeys.map((card, id) => {
       // routineItems ->

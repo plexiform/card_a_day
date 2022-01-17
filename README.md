@@ -1,15 +1,19 @@
 todo:
 
+- PUT morning routine (to complete fast, meditation)
+  - limit routine to 1/day
+- update button stays after time passes (w/o updating percent when clicked)
 - implement years
 - preset schedule structures 
   (e.g. my structure rn is [([webdev OR alg] + prob) -> [math OR/THEN lCPP OR/THEN gamemath] -> draw]) ->
     turns into [graphql/next + econometrics/R] -> gamemath (eventually dasgupta/viz, and after that, networks) -> draw)
-- deadline on morning routine
+- deadline on morning routine?
 - smarter date inputs + defaults
 - card sharing
 - goals on timeblocks
 - notes on timeblocks
 - modularize some functions in day-cardes
+-
 
 
 8-5

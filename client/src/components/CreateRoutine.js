@@ -33,7 +33,17 @@ class CreateRoutine extends React.Component {
       })
     }).catch(err => {
       console.log(err);
+    });
+
+    /* !!! limit routine to 1/day; update state here
+    axios.get('http://localhost:8082/api/routines', {
+      withCredentials:true
+    }).then(res => {
+      this.setState({
+
+      })
     })
+    */
   };
 
   handleChange = e => {
@@ -110,7 +120,8 @@ class CreateRoutine extends React.Component {
           Start your day right.
           <form noValidate onSubmit={this.handleSubmit}>
             <div>
-              <input style={{ width: '50%' }}
+              <input
+                style={{ width: '50%' }}
                 autocomplete="off"
                 type='text'
                 placeholder='things youre grateful for'
@@ -120,33 +131,40 @@ class CreateRoutine extends React.Component {
               />
             </div>
 
-            <span>Values to embody:</span>
-            {
-              this.state.values.map((val, id) => {
-                const value = val.valueAndReason.value;
-                return (
-                  <div key={id} style={{ display: 'inline-block', margin: '.25em' }}>
-                    <input
-                      type='checkbox'
-                      placeholder='values you want to embody'
-                      name='postVals'
-                      value={value}
-                      key={id}
-                      onChange={this.handleCheckboxChange}
-                    />
-                    <label for={id}>{value}</label>
-                  </div>
-                )
-              })
-            }
+            <div
+              style={{
+                maxWidth: '50%'
+              }}
+            >
+              <span>Values to embody:</span>
+              {
+                this.state.values.map((val, id) => {
+                  const value = val.valueAndReason.value;
+                  return (
+                    <div
+                      style={{ display: 'inline-block' }}>
+                      <input
+                        type='checkbox'
+                        class='valueButton'
+                        placeholder='values you want to embody'
+                        name='postVals'
+                        value={value}
+                        id={id}
+                        onChange={this.handleCheckboxChange}
+                      />
+                      <label id='valueLabel' for={id}>{value}</label>
+                    </div>
+                  )
+                })
+              }
+            </div>
 
             {/* !!!*/}
 
             <div>
-              <input
-                style={{ width: '50%', height: '100px' }}
+              <textarea
+                style={{ width: '50%', height: '100px', border: '1 solid white' }}
                 autocomplete="off"
-                type='text'
                 placeholder='why are you focusing on these values today?'
                 name='value_affirmation'
                 value={this.state.value_affirmation}
@@ -205,9 +223,11 @@ class CreateRoutine extends React.Component {
               />
             </div>
 
-            <input
+            <button
               type="submit"
-            />
+            >
+              submit
+            </button>
           </form>
         </div>
       </div >

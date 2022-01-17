@@ -96,10 +96,10 @@ class SchedCard extends React.Component {
         {(new Date() > new Date(currentCard.endTime)) || this.state.finished ? '' :
           <div>
             <form style={{ display: 'inline-block' }} onSubmit={this.handleSubmit}>
-              <input type='submit' value='update' />
+              <button type='submit' value='update'>update</button>
             </form>
             <form style={{ display: 'inline-block' }} onClick={this.handleFinish}>
-              <input type='submit' value='fin' />
+              <button type='submit' value='fin' >fin</button>
             </form>
           </div>
         }
