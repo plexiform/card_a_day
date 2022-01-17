@@ -101,9 +101,9 @@ export default function Layout({ children }) {
 
             <StyledLink name='schedule' to='/create-schedule'><SidebarItem>Block your time</SidebarItem></StyledLink>
 
-            <StyledLink name='conclusion' to='/end-day'><SidebarItem>End of day</SidebarItem></StyledLink>
+            <StyledLink name='conclusion' to='/end-day'><SidebarItem>Reflect on your day</SidebarItem></StyledLink>
 
-            <StyledLink name='cards' to='/day-cards'><SidebarItem>How your days have gone</SidebarItem></StyledLink>
+            <StyledLink name='cards' to='/day-cards'><SidebarItem>Calendar</SidebarItem></StyledLink>
 
 
           </Sidebar>

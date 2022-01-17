@@ -93,6 +93,7 @@ export default function EndDay() {
     */}
       </div>
       <div style={{ gridColumnStart: 2 }}>
+        <h4><i>!!! left-right click</i></h4>
         <JournalEntries newEntry={journalEntry} />
       </div>
 
