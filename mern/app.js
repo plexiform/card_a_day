@@ -7,6 +7,7 @@ const routines = require('./routes/api/routines');
 const schedules = require('./routes/api/schedules');
 const values = require('./routes/api/values');
 const goals = require('./routes/api/goals');
+const journals = require('./routes/api/journals');
 
 const User = require('./models/User');
 const cookieParser = require('cookie-parser');

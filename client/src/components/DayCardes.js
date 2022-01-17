@@ -165,11 +165,12 @@ export default function DayCardes() {
             <div
               style={{
                 backgroundImage: 'linear-gradient(to right, rgba(255,0,0,0), black',
-                color: 'white',
-                textAlign: 'right'
+                color: 'white'
               }}
             >
-              {totalMins[card]} min ttl
+              <div>
+                00:00 ➤❚❚  {totalMins[card]} min total
+              </div>
             </div> : ''
           }
           {currentSchedules}

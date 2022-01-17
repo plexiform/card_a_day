@@ -10,6 +10,7 @@ const ExpanderStyle = styled.div`
     font-style:italic;
     &:hover {
       background-color: white;
+      cursor: crosshair;
     }
 `
 

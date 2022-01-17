@@ -11,3 +11,5 @@ const JournalSchema = mongoose.Schema({
     required: true
   }
 })
+
+module.exports = Journal = mongoose.model('journal', JournalSchema);
