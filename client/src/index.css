@@ -90,7 +90,7 @@ button:hover {
 .activeTab {
   border-top-style:solid;
   border-top-width:5px;
-  border-top-color:yellow;
+  border-top-color:turquoise;
   background-color:#1f1f1f;
 }
 

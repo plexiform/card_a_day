@@ -63,7 +63,7 @@ export default function JournalEntries(props) {
                 borderBottomStyle: 'solid',
                 borderBottomColor: 'brown',
               }}>
-                <div style={{ textAlign: 'right' }}>{entry.date}</div>
+                <div style={{ textAlign: 'right', fontStyle: 'oblique' }}>{entry.date.split("T")[1].substr(0, 5)}</div>
                 {entry.journalEntry}
               </div>
             )

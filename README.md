@@ -4,7 +4,7 @@ todo:
   - limit routine to 1/day
 - update button stays after time passes (w/o updating percent when clicked)
 - implement years
-- preset schedule structures 
+- preset schedule structures + time blocks (2.5h etc)
   (e.g. my structure rn is [([webdev OR alg] + prob) -> [math OR/THEN lCPP OR/THEN gamemath] -> draw]) ->
     turns into [graphql/next + econometrics/R] -> gamemath (eventually dasgupta/viz, and after that, networks) -> draw)
 - deadline on morning routine?

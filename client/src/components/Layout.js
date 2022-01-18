@@ -62,7 +62,7 @@ const StyledLink = styled(NavLink)`
     background-color:#1f1f1f;
     border-left-width:3px;
     border-left-style:solid;
-    border-left-color:yellow;
+    border-left-color:brown;
   }
 
 `
@@ -85,12 +85,11 @@ export default function Layout({ children }) {
               marginLeft: '.3em',
               color: '#2c2c2c',
               fontFamily: 'open-sans-condensed',
-              fontWeight: 700,
-              transform: 'rotate(180deg)'
+
             }}
             to='/welcome'
           >
-            WARD!
+            c<span style={{ color: 'brown', fontSize: '.75em' }}>∀</span>rd
           </Link>
           <LogoutStyle><LeftNav><NavLink to='/dashboard'>Dashboard</NavLink></LeftNav><Logout /></LogoutStyle>
         </TopBar>
