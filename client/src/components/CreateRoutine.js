@@ -122,7 +122,7 @@ class CreateRoutine extends React.Component {
             <div>
               <input
                 style={{ width: '50%' }}
-                autocomplete="off"
+                autoComplete="off"
                 type='text'
                 placeholder='things youre grateful for'
                 name='gratitude'
@@ -145,7 +145,7 @@ class CreateRoutine extends React.Component {
                       style={{ display: 'inline-block' }}>
                       <input
                         type='checkbox'
-                        class='valueButton'
+                        className='valueButton'
                         placeholder='values you want to embody'
                         name='postVals'
                         value={value}

@@ -27,6 +27,7 @@ router.get('/entries', async (req, res) => {
     const user = await User.findOne({ username: req.session.userId }).exec();
     const entries = await Journal.find({ userId: user._id }).exec();
 
+    entries.sort((a, b) => b.date - a.date);
     res.json(entries);
   } else {
     res.status(403).json({ message: 'could not retrieve entries' })

@@ -38,8 +38,8 @@ export default function EndDay() {
       }}
     >
       <div style={{ gridColumnStart: 1 }}>
-        <h2>{new Date(Date.now()).toISOString().slice(0, 10)}</h2>
-        <i>New journal entry:</i>
+        <h2>Journal ^_^</h2>
+        <i>New entry:</i>
         <form onSubmit={submitJournal}>
           <textarea
             style={{
@@ -93,7 +93,6 @@ export default function EndDay() {
     */}
       </div>
       <div style={{ gridColumnStart: 2 }}>
-        <h4><i>!!! left-right click</i></h4>
         <JournalEntries newEntry={journalEntry} />
       </div>
 
