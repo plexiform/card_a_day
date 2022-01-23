@@ -95,7 +95,7 @@ export default function Dashboard() {
           {goalList.map((goal, id) => {
 
             return (
-              <div id={id}>{goal.goalName}</div>
+              <div key={id}>{goal.goalName}</div>
             )
 
           })}

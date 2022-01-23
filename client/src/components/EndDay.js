@@ -31,59 +31,64 @@ export default function EndDay() {
   }
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridColumns: '1fr 1fr'
-      }}
-    >
-      <div style={{ gridColumnStart: 1 }}>
-        <h2>Journal ^_^</h2>
-        <i>New entry:</i>
-        <form onSubmit={submitJournal}>
-          <textarea
-            style={{
-              width: '50%'
-            }}
-            value={journalEntry}
-            onChange={e => setJournalEntry(e.target.value)}>
-          </textarea>
-          <button>submit</button>
-        </form>
+    <div style={{
+      display: 'flex',
+      width: '100%'
+    }}>
+      <div
+        style={{
+          display: 'grid',
+          gridColumns: '1fr 1fr'
+        }
+        }
+      >
+        <div style={{ gridColumnStart: 1 }}>
+          <h2>Journal ^_^</h2>
+          <i>New entry:</i>
+          <form onSubmit={submitJournal}>
+            <textarea
+              style={{
+                width: '400px'
+              }}
+              value={journalEntry}
+              onChange={e => setJournalEntry(e.target.value)}>
+            </textarea><br />
+            <button>submit</button>
+          </form>
 
-        <i>Three good things:</i>
-        <form onSubmit={submitThreeGoodThings}>
-          <ol>
-            <li>
-              <input
-                name="first"
-                type="text"
-                onChange={handleThreeChange}
-              >
+          <i>Three good things:</i>
+          <form onSubmit={submitThreeGoodThings}>
+            <ol>
+              <li>
+                <input
+                  name="first"
+                  type="text"
+                  onChange={handleThreeChange}
+                >
 
-              </input>
-            </li>
-            <li>
-              <input
-                name="second"
-                type="text"
-                onChange={handleThreeChange}
-              >
+                </input>
+              </li>
+              <li>
+                <input
+                  name="second"
+                  type="text"
+                  onChange={handleThreeChange}
+                >
 
-              </input>
-            </li>
-            <li>
-              <input
-                name="third"
-                type="text"
-                onChange={handleThreeChange}
-              >
+                </input>
+              </li>
+              <li>
+                <input
+                  name="third"
+                  type="text"
+                  onChange={handleThreeChange}
+                >
 
-              </input>
-            </li>
-          </ol>
-        </form>
-        {/*
+                </input>
+              </li>
+            </ol>
+          </form>
+          {/*
       <ul>
         <li>3 good things</li>
         <li>what could I have done better? (e.g. a big weakness on 1/3/22, was starting late on the time blocks, gaps of time between said blocks, and Googling peripheral things instead of fully engaging in the content ~ fill that in later? or find a way to measure focus/mindfulness)</li>
@@ -91,12 +96,12 @@ export default function EndDay() {
         <li>Import/enter items that demonstrate values</li>
       </ul>
     */}
-      </div>
-      <div style={{ gridColumnStart: 2 }}>
-        <JournalEntries newEntry={journalEntry} />
-      </div>
+        </div>
+        <div style={{ marginLeft: '2em', gridColumnStart: 2, minWidth: '400px', width: '50%', justifyContent: 'right' }}>
+          <JournalEntries newEntry={journalEntry} />
+        </div>
 
-    </div>
-
+      </ div>
+    </div >
   )
 }

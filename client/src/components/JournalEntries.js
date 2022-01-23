@@ -47,6 +47,7 @@ export default function JournalEntries(props) {
         withCredentials: true
       })
       .then(res => {
+        console.log('spam?');
         setEntries(res.data);
       })
       .catch(err => alert(err));
@@ -54,12 +55,13 @@ export default function JournalEntries(props) {
 
   return (
     <div>
+      !!!~today's values~
       <h4>{currentDate}</h4>
       <div style={{ overflow: 'auto', height: '300px' }}>
         {
           dayEntries.map((entry, id) => {
             return (
-              <div style={{
+              <div key={id} style={{
                 borderBottomStyle: 'solid',
                 borderBottomColor: 'brown',
               }}>

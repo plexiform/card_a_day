@@ -24,7 +24,7 @@ export default function Welcome() {
         The only requirement is honesty.
       </div>
       <div style={{ gridColumnStart: 2, width: '400px', height: '500px', border: '1px white solid' }}>
-
+        <i>component sold separately</i>
       </div>
     </div>
   )

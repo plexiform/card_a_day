@@ -14,7 +14,8 @@ class CreateRoutine extends React.Component {
       minutes_spent: '',
       date: '',
       postVals: [],
-      completed_fast: false
+      completed_fast: false,
+      meditated: false
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -55,8 +56,9 @@ class CreateRoutine extends React.Component {
   }
 
   handleToggleChange = e => {
+    const stateItem = e.target.dataset.key;
     this.setState(prevState => ({
-      completed_fast: !prevState.completed_fast
+      [stateItem]: !prevState[stateItem]
     }))
   }
 
@@ -107,7 +109,8 @@ class CreateRoutine extends React.Component {
           minutes_spent: '',
           date: '',
           postVals: [],
-          completed_fast: false
+          completed_fast: false,
+          meditated: false
         })
       })
       .catch(err => console.log('no create routino'));
@@ -174,15 +177,43 @@ class CreateRoutine extends React.Component {
 
             <div>
               <input
-                style={{ width: '50%' }}
-                autocomplete="off"
-                type='text'
-                placeholder='what type of meditation did you do?'
-                name='type_of_meditation'
-                value={this.state.type_of_meditation}
-                onChange={this.handleChange}
-              />
+                type='radio'
+                id='meditated'
+                data-key='meditated'
+                checked={this.state.meditated}
+                onClick={this.handleToggleChange}
+              >
+              </input>
+              <label for='meditated'>Did you meditate?</label>
             </div>
+
+            {this.state.meditated &&
+              <div>
+                <div>
+                  <input
+                    style={{ width: '50%' }}
+                    autocomplete="off"
+                    type='text'
+                    placeholder='what type of meditation did you do?'
+                    name='type_of_meditation'
+                    value={this.state.type_of_meditation}
+                    onChange={this.handleChange}
+                  />
+                </div>
+
+                <div>
+                  <input
+                    style={{ width: '50%' }}
+                    autocomplete="off"
+                    type='number'
+                    placeholder='how long did you meditate for?'
+                    name='minutes_spent'
+                    value={this.state.minutes_spent}
+                    onChange={this.handleChange}
+                  />
+                </div>
+              </div>
+            }
 
             <div style={{ width: '50%' }}>
               <input
@@ -193,24 +224,12 @@ class CreateRoutine extends React.Component {
                 checked={this.state.completed_fast}
                 value={this.state.completed_fast}
                 defaultValue={false}
+                data-key='completed_fast'
                 onClick={this.handleToggleChange}
                 readOnly
               />
               <label for='completed_fast'>Did you complete your fast?</label>
               <span>  [ x ] exercise?</span>
-            </div>
-
-
-            <div>
-              <input
-                style={{ width: '50%' }}
-                autocomplete="off"
-                type='number'
-                placeholder='how long did you meditate for?'
-                name='minutes_spent'
-                value={this.state.minutes_spent}
-                onChange={this.handleChange}
-              />
             </div>
 
             <div>
