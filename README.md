@@ -2,6 +2,7 @@ todo:
 
 - PUT morning routine (to complete fast, meditation)
   - limit routine to 1/day
+  - introduce timer to meditation to make it more self-contained (voice recording too)
 - update button stays after time passes (w/o updating percent when clicked)
 - implement years
 - preset schedule structures + time blocks (2.5h etc)

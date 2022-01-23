@@ -18,11 +18,11 @@ const RoutineSchema = new mongoose.Schema({
     },
     type_of_meditation: {
       type: String,
-      required: true
+      //      required: true
     },
     minutes_spent: {
       type: Number,
-      required: true
+      //      required: true
     },
     completed_fast: {
       type: Boolean
