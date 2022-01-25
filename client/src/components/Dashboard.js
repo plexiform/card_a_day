@@ -7,6 +7,7 @@ export default function Dashboard() {
   const [valueReason, setValueReason] = useState("");
   const [goal, setGoal] = useState("");
   const [goalList, setGoalList] = useState([]);
+  const [deadline, setDeadline] = useState(null);
 
   function handleValueSubmit(e) {
     e.preventDefault();
@@ -25,25 +26,6 @@ export default function Dashboard() {
       .catch(err => console.log('no creato valuo'));
   };
 
-  useEffect(() => {
-    axios.get('http://localhost:8082/api/values',
-      {
-        withCredentials: true
-      }).then(res => {
-        setValueList(res.data);
-      }).catch(err => console.log('couldnt retrieve values'));
-  }, [value]);
-
-  useEffect(() => {
-    axios.get('http://localhost:8082/api/goals',
-      {
-        withCredentials: true
-      }).then(res => {
-        console.log('1111');
-        setGoalList(res.data);
-      }).catch(err => console.log('couldnt retrieve goals'));
-  }, [goal])
-
   function handleGoalSubmit(e) {
     e.preventDefault();
 
@@ -60,7 +42,52 @@ export default function Dashboard() {
       .catch(err => console.log('no creato goalo'))
   }
 
+  function handleDeadlineUpdate(e) {
+    e.preventDefault();
 
+    // deadline is in military time
+    console.log(deadline);
+    /*
+    axios.put('http://localhost:8082/api/goals',
+      {
+
+      },
+      {
+        withCredentials: true
+      }).then(res => {
+
+      })
+      */
+  };
+
+  useEffect(() => {
+    axios.get('http://localhost:8082/api/values',
+      {
+        withCredentials: true
+      }).then(res => {
+        setValueList(res.data);
+      }).catch(err => console.log('couldnt retrieve values'));
+  }, [value]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8082/api/goals',
+      {
+        withCredentials: true
+      }).then(res => {
+        setGoalList(res.data);
+      }).catch(err => console.log('couldnt retrieve goals'));
+  }, [goal])
+
+  /*
+  useEffect(() => {
+    axios.get('http://localhost:8082/api/deadlines',
+      {
+        withCredentials: true
+      }).then(res => {
+        setDeadline(res.data)
+      })
+  })
+  */
 
   function handleDelete(id) {
     axios.delete('http://localhost:8082/api/values/' + id)
@@ -82,13 +109,19 @@ export default function Dashboard() {
     <div style={{
       display: 'grid',
       gridColumns: '1fr 1fr',
-
     }}>
+
+      <form onChange={e => setDeadline(e.target.value)} onSubmit={handleDeadlineUpdate} style={{ gridColumnStart: 2 }}>
+        <span style={{ fontSize: 20 }}>Morning routine deadline: </span>
+        <input type="time"></input>
+        <button>✓</button>
+      </form>
+
       <div>
         <h1>Goals</h1>
         <div style={{
           display: 'grid',
-          gridColumns: '1fr 1fr',
+          gridColumnStart: '1fr 1fr',
           maxHeight: 100,
           overflow: 'auto'
         }}>

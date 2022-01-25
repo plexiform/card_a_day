@@ -27,7 +27,6 @@ router.get('/', async (req, res) => {
 //{ $push: { friends: objFriends } },
 
 router.put('/', async (req, res) => {
-  console.log('reqbod', req.body.schedId);
   await Goal.findOneAndUpdate(
     { goalName: req.body.goal },
     {

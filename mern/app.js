@@ -8,6 +8,7 @@ const schedules = require('./routes/api/schedules');
 const values = require('./routes/api/values');
 const goals = require('./routes/api/goals');
 const journals = require('./routes/api/journals');
+const deadlines = require('./routes/api/deadlines');
 
 const User = require('./models/User');
 const cookieParser = require('cookie-parser');
@@ -47,6 +48,7 @@ app.use('/api/routines', routines);
 app.use('/api/schedules', schedules);
 app.use('/api/values', values);
 app.use('/api/goals', goals);
+app.use('/api/deadlines', deadlines);
 app.use('/api/journals', journals); // access to journals + threeGoodThings entries
 
 // changed '/' to '/api' to prevent conflict on heroku
