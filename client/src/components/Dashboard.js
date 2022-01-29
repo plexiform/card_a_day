@@ -7,7 +7,8 @@ export default function Dashboard() {
   const [valueReason, setValueReason] = useState("");
   const [goal, setGoal] = useState("");
   const [goalList, setGoalList] = useState([]);
-  const [deadline, setDeadline] = useState(null);
+  const [deadline, setDeadline] = useState("");
+  const [deadlineObj, setDeadlineObj] = useState({});
 
   function handleValueSubmit(e) {
     e.preventDefault();
@@ -45,19 +46,17 @@ export default function Dashboard() {
   function handleDeadlineUpdate(e) {
     e.preventDefault();
 
-    // deadline is in military time
-    console.log(deadline);
-    /*
-    axios.put('http://localhost:8082/api/goals',
+    axios.put('http://localhost:8082/api/deadlines/' + deadlineObj._id,
       {
-
+        deadline
       },
       {
         withCredentials: true
       }).then(res => {
-
+        console.log(res.message);
+      }).catch(err => {
+        console.log('couldn\'t update deadline')
       })
-      */
   };
 
   useEffect(() => {
@@ -78,16 +77,16 @@ export default function Dashboard() {
       }).catch(err => console.log('couldnt retrieve goals'));
   }, [goal])
 
-  /*
+
   useEffect(() => {
     axios.get('http://localhost:8082/api/deadlines',
       {
         withCredentials: true
       }).then(res => {
-        setDeadline(res.data)
+        setDeadlineObj(res.data);
+        setDeadline(res.data.deadline);
       })
-  })
-  */
+  }, [])
 
   function handleDelete(id) {
     axios.delete('http://localhost:8082/api/values/' + id)
@@ -113,7 +112,7 @@ export default function Dashboard() {
 
       <form onChange={e => setDeadline(e.target.value)} onSubmit={handleDeadlineUpdate} style={{ gridColumnStart: 2 }}>
         <span style={{ fontSize: 20 }}>Morning routine deadline: </span>
-        <input type="time"></input>
+        <input defaultValue={deadline} type="time"></input>
         <button>✓</button>
       </form>
 
@@ -157,7 +156,7 @@ export default function Dashboard() {
           {
             valueList.map((val, id) => {
               return (
-                <div id={id}>
+                <div key={id}>
                   <b>val:</b> {val.valueAndReason.value} - <b>reason:</b> {val.valueAndReason.reason}
                   <input onClick={handleDelete.bind(this, val._id)} type='submit' value='x' />
                 </div>
@@ -168,7 +167,7 @@ export default function Dashboard() {
 
         <form noValidate onSubmit={handleValueSubmit}>
           <input
-            autocomplete="off"
+            autoComplete="off"
             id="value"
             type="text"
             placeholder="An important value"
@@ -178,7 +177,7 @@ export default function Dashboard() {
           </input>
           <br />
           <textarea
-            autocomplete="off"
+            autoComplete="off"
             id="valueReason"
             type="text"
             placeholder="Why is this value important to you?"

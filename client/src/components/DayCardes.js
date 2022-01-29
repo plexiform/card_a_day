@@ -130,7 +130,7 @@ export default function DayCardes() {
 
       const currentRoutines = cards[card].routines.map((routine, id) => {
         return (
-          <Morning routine={routine} />
+          <Morning key={id} routine={routine} />
         )
       });
 
@@ -141,7 +141,7 @@ export default function DayCardes() {
         const endTime = splitDate(sched.timeBlock.endTime)[1];
 
         return (
-          <BlockStyle id={id}>
+          <BlockStyle key={id}>
             {startTime} – {endTime}
             <br />
             <SchedCard
@@ -157,7 +157,7 @@ export default function DayCardes() {
       });
 
       return (
-        <CardStyle id={id} percent={cardPercent[card]} current={card === splitDate(new Date())[0]}>
+        <CardStyle key={id} percent={cardPercent[card]} current={card === splitDate(new Date())[0]}>
           <div>⤡<i style={{ float: 'right' }}>{card}</i></div><br />
 
           {currentRoutines}

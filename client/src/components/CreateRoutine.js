@@ -12,10 +12,11 @@ class CreateRoutine extends React.Component {
       value_affirmation: '',
       type_of_meditation: '',
       minutes_spent: '',
-      date: '',
+      date: new Date(new Date() - (new Date().getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       postVals: [],
       completed_fast: false,
-      meditated: false
+      meditated: false,
+      deadline: ''
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -36,15 +37,15 @@ class CreateRoutine extends React.Component {
       console.log(err);
     });
 
-    /* !!! limit routine to 1/day; update state here
-    axios.get('http://localhost:8082/api/routines', {
-      withCredentials:true
+    axios.get('http://localhost:8082/api/deadlines', {
+      withCredentials: true
     }).then(res => {
       this.setState({
-
+        deadline: res.data.deadline
       })
-    })
-    */
+    }).catch(err => {
+      console.log(err);
+    });
   };
 
   handleChange = e => {
@@ -118,138 +119,133 @@ class CreateRoutine extends React.Component {
 
   render() {
     return (
-      <div className="CreateRoutine ">
-        <div>
-          Start your day right.
-          <form noValidate onSubmit={this.handleSubmit}>
-            <div>
-              <input
-                style={{ width: '50%' }}
-                autoComplete="off"
-                type='text'
-                placeholder='things youre grateful for'
-                name='gratitude'
-                value={this.state.gratitude}
-                onChange={this.handleChange}
-              />
-            </div>
-
-            <div
-              style={{
-                maxWidth: '50%'
-              }}
-            >
-              <span>Values to embody:</span>
-              {
-                this.state.values.map((val, id) => {
-                  const value = val.valueAndReason.value;
-                  return (
-                    <div
-                      style={{ display: 'inline-block' }}>
-                      <input
-                        type='checkbox'
-                        className='valueButton'
-                        placeholder='values you want to embody'
-                        name='postVals'
-                        value={value}
-                        id={id}
-                        onChange={this.handleCheckboxChange}
-                      />
-                      <label id='valueLabel' for={id}>{value}</label>
-                    </div>
-                  )
-                })
-              }
-            </div>
-
-            {/* !!!*/}
-
-            <div>
-              <textarea
-                style={{ width: '50%', height: '100px', border: '1 solid white' }}
-                autocomplete="off"
-                placeholder='why are you focusing on these values today?'
-                name='value_affirmation'
-                value={this.state.value_affirmation}
-                onChange={this.handleChange}
-              />
-            </div>
-
-            <div>
-              <input
-                type='radio'
-                id='meditated'
-                data-key='meditated'
-                checked={this.state.meditated}
-                onClick={this.handleToggleChange}
-              >
-              </input>
-              <label for='meditated'>Did you meditate?</label>
-            </div>
-
-            {this.state.meditated &&
-              <div>
-                <div>
-                  <input
-                    style={{ width: '50%' }}
-                    autocomplete="off"
-                    type='text'
-                    placeholder='what type of meditation did you do?'
-                    name='type_of_meditation'
-                    value={this.state.type_of_meditation}
-                    onChange={this.handleChange}
-                  />
-                </div>
-
-                <div>
-                  <input
-                    style={{ width: '50%' }}
-                    autocomplete="off"
-                    type='number'
-                    placeholder='how long did you meditate for?'
-                    name='minutes_spent'
-                    value={this.state.minutes_spent}
-                    onChange={this.handleChange}
-                  />
-                </div>
-              </div>
-            }
-
-            <div style={{ width: '50%' }}>
-              <input
-                type='radio'
-                id='completed_fast'
-                placeholder='did you complete your fast?'
-                name='completed_fast'
-                checked={this.state.completed_fast}
-                value={this.state.completed_fast}
-                defaultValue={false}
-                data-key='completed_fast'
-                onClick={this.handleToggleChange}
-                readOnly
-              />
-              <label for='completed_fast'>Did you complete your fast?</label>
-              <span>  [ x ] exercise?</span>
-            </div>
-
-            <div>
-              <input
-                className="datePicker"
-                type='date'
-                name=''
-                value={this.state.date}
-                onChange={this.handleDate}
-              />
-            </div>
-
-            <button
-              type="submit"
-            >
-              submit
-            </button>
-          </form>
+      <div style={{ width: '50%' }} className="CreateRoutine ">
+        <div style={{ float: 'right' }}>{this.state.date}</div>
+        <div>Deadline: {this.state.deadline}
         </div>
-      </div >
+        {new Date(new Date() - (new Date().getTimezoneOffset() * 60000)).toISOString()
+          < `${new Date(new Date() - (new Date().getTimezoneOffset() * 60000)).toISOString().split("T")[0].substr(0, 10)}T${this.state.deadline}:00` ?
+          <div>
+            Start your day right.
+            <form noValidate onSubmit={this.handleSubmit}>
+              <div>
+                <input
+                  style={{ width: '100%' }}
+                  autoComplete="off"
+                  type='text'
+                  placeholder='things youre grateful for'
+                  name='gratitude'
+                  value={this.state.gratitude}
+                  onChange={this.handleChange}
+                />
+              </div>
+
+              <div
+              >
+                <span>Values to embody: </span>
+                {
+                  this.state.values.map((val, id) => {
+                    const value = val.valueAndReason.value;
+                    return (
+                      <div
+                        style={{ display: 'inline-block' }}>
+                        <input
+                          type='checkbox'
+                          className='valueButton'
+                          placeholder='values you want to embody'
+                          name='postVals'
+                          value={value}
+                          id={id}
+                          onChange={this.handleCheckboxChange}
+                        />
+                        <label id='valueLabel' for={id}>{value}</label>
+                      </div>
+                    )
+                  })
+                }
+              </div>
+
+              {/* !!!*/}
+
+              <div>
+                <textarea
+                  style={{ width: '100%', height: '100px', border: '1 solid white' }}
+                  autocomplete="off"
+                  placeholder='why are you focusing on these values today?'
+                  name='value_affirmation'
+                  value={this.state.value_affirmation}
+                  onChange={this.handleChange}
+                />
+              </div>
+
+              <div>
+                <input
+                  type='radio'
+                  id='meditated'
+                  data-key='meditated'
+                  checked={this.state.meditated}
+                  onClick={this.handleToggleChange}
+                >
+                </input>
+                <label for='meditated'>Did you meditate?</label>
+              </div>
+
+              {this.state.meditated &&
+                <div>
+                  <div>
+                    <input
+                      style={{ width: '100%' }}
+                      autocomplete="off"
+                      type='text'
+                      placeholder='what type of meditation did you do?'
+                      name='type_of_meditation'
+                      value={this.state.type_of_meditation}
+                      onChange={this.handleChange}
+                    />
+                  </div>
+
+                  <div>
+                    <input
+                      style={{ width: '100%' }}
+                      autocomplete="off"
+                      type='number'
+                      placeholder='how long did you meditate for?'
+                      name='minutes_spent'
+                      value={this.state.minutes_spent}
+                      onChange={this.handleChange}
+                    />
+                  </div>
+                </div>
+              }
+
+              <div>
+                <input
+                  type='radio'
+                  id='completed_fast'
+                  placeholder='did you complete your fast?'
+                  name='completed_fast'
+                  checked={this.state.completed_fast}
+                  value={this.state.completed_fast}
+                  defaultValue={false}
+                  data-key='completed_fast'
+                  onClick={this.handleToggleChange}
+                  readOnly
+                />
+                <label for='completed_fast'>Did you complete your fast?</label>
+                <span>[x]exercise?</span>
+              </div>
+
+              <button
+                type="submit"
+              >
+                submit
+              </button>
+            </form>
+          </div >
+          :
+          <>DEAD IN DA WATUH</>
+        }
+      </div>
     )
   }
 }

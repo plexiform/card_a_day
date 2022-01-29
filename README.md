@@ -1,5 +1,6 @@
 todo:
 
+- display today's sched in create schedule
 - PUT morning routine (to complete fast, meditation)
   - limit routine to 1/day
   - introduce timer to meditation to make it more self-contained (voice recording too)
