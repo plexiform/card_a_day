@@ -3,6 +3,8 @@ import axios from 'axios';
 
 export default function JournalEntries(props) {
   const [entries, setEntries] = useState([]);
+  const [routineList, setRoutineList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const convertFromUtc = (fullDate) => {
     // fullDate is a Date object
@@ -39,7 +41,22 @@ export default function JournalEntries(props) {
     const date = new Date(entry.date).toISOString().slice(0, 10);
 
     return date === currentDate;
-  })
+  });
+
+  function valuesToday() {
+    const routineThisDay = routineList.filter(routine => {
+      return routine.routineItems.date.substr(0, 10) === currentDate;
+    })
+
+    if (routineThisDay.length === 0) {
+      dayEntries.values = [];
+    } else {
+      dayEntries.values = routineThisDay[0].routineItems.values;
+    }
+
+    return dayEntries.values;
+  }
+
 
   useEffect(() => {
     axios.get('http://localhost:8082/api/journals/entries',
@@ -47,31 +64,57 @@ export default function JournalEntries(props) {
         withCredentials: true
       })
       .then(res => {
-        console.log('spam?');
         setEntries(res.data);
       })
       .catch(err => alert(err));
-  }, [props.newEntry])
+  }, [props.newEntry]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8082/api/routines',
+      {
+        withCredentials: true
+      }).then(res => {
+        setRoutineList(res.data);
+        setIsLoading(false);
+      }).catch(err => console.log('couldnt retrieve routines'));
+  }, []);
 
   return (
     <div>
-      !!!~today's values~
+
       <h4>{currentDate}</h4>
-      <div style={{ overflow: 'auto', height: '300px' }}>
-        {
-          dayEntries.map((entry, id) => {
-            return (
-              <div key={id} style={{
-                borderBottomStyle: 'solid',
-                borderBottomColor: 'brown',
-              }}>
-                <div style={{ textAlign: 'right', fontStyle: 'oblique' }}>{entry.date.split("T")[1].substr(0, 5)}</div>
-                {entry.journalEntry}
-              </div>
-            )
-          })
-        }
-      </div>
+      {!isLoading ?
+        <>
+          <ul style={{ height: 100 }}>
+            {
+              valuesToday().map((val, id) => {
+                return (
+                  <li key={id}>
+                    {val}
+                  </li>
+                )
+              })
+            }
+          </ul>
+          <div style={{ overflow: 'auto', height: '300px' }}>
+            {
+              dayEntries.map((entry, id) => {
+                return (
+                  <div key={id} style={{
+                    borderBottomStyle: 'solid',
+                    borderBottomColor: 'brown',
+                  }}>
+                    <div style={{ textAlign: 'right', fontStyle: 'oblique' }}>{entry.date.split("T")[1].substr(0, 5)}</div>
+                    {entry.journalEntry}
+                  </div>
+                )
+              })
+            }
+          </div>
+        </>
+        :
+        <>Loading</>
+      }
       <div style={{ fontSize: 20 }}>
         <button onClick={e => setCurrentDate(aDayAway(currentDate, 'before'))}>←</button>
         <button onClick={e => setCurrentDate(aDayAway(currentDate, 'after'))}>→</button>
