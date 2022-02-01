@@ -110,6 +110,13 @@ export default function Dashboard() {
       gridColumns: '1fr 1fr',
     }}>
 
+      <form style={{ gridColumnStart: 1 }}>
+        <input type='radio' id='public'>
+        </input>
+        <label style={{ marginRight: 10 }} for='public'>Public</label>
+        <button>Confirm</button>
+      </form>
+
       <form onChange={e => setDeadline(e.target.value)} onSubmit={handleDeadlineUpdate} style={{ gridColumnStart: 2 }}>
         <span style={{ fontSize: 20 }}>Morning routine deadline: </span>
         <input defaultValue={deadline} type="time"></input>

@@ -16,6 +16,7 @@ import LoginContainer from './components/LoginContainer';
 import DayCardes from './components/DayCardes';
 import Dashboard from './components/Dashboard';
 import EndDay from './components/EndDay';
+import PublicProfile from './components/PublicProfile';
 
 function App() {
   const credentialsState = useState({});
@@ -71,6 +72,10 @@ function App() {
             </Route>
 
             <Route exact path='/register' component={Register} />
+
+            <Route path='/:profile'>
+              <PublicProfile />
+            </Route>
           </Switch>
         </Router>
 

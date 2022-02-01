@@ -5,15 +5,60 @@ import JournalEntries from './JournalEntries';
 export default function EndDay() {
   const [journalEntry, setJournalEntry] = useState('');
   const [threeGoodThings, setThreeGoodThings] = useState({ first: "", second: "", third: "" });
+  const [routineList, setRoutineList] = useState([]);
+
+  const [values, setValues] = useState([]);
+  const [taggedValues, setTaggedValues] = useState([]);
+
+  const HandleCheckboxChange = e => {
+    if (e.target.checked) {
+      setTaggedValues([...taggedValues, e.target.value])
+    } else {
+      setTaggedValues(values => values.filter(checkedBox => {
+        return checkedBox !== e.target.value
+      }));
+    }
+
+    console.log(taggedValues);
+  }
+
+  useEffect(() => {
+    axios.get('http://localhost:8082/api/routines',
+      {
+        withCredentials: true
+      }).then(res => {
+        setRoutineList(res.data);
+        setValues(valuesToday());
+      }).catch(err => console.log('couldnt retrieve routines'));
+  }, [journalEntry]);
+
+  const convertFromUtc = (fullDate) => {
+    // fullDate is a Date object
+    const toISO = fullDate.toISOString();
+    const tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    const date = (new Date(new Date(toISO).getTime() - tzoffset)).toISOString();
+
+    return date;
+  };
+
+  const today = convertFromUtc(new Date()).slice(0, 10);
+
+  const valuesToday = () => {
+    const routineThisDay = routineList.filter(routine => {
+      return routine.routineItems.date.substr(0, 10) === today;
+    })
+
+    return routineThisDay[0].routineItems.values;
+  }
 
   const submitJournal = e => {
     e.preventDefault();
 
-    axios.post('http://localhost:8082/api/journals/journal', { journalEntry },
+    axios.post('http://localhost:8082/api/journals/journal', { journalEntry, values: taggedValues },
       {
         withCredentials: true
       })
-      .then(setJournalEntry(''))
+      .then(setJournalEntry(''), setTaggedValues([]), setValues([]))
       .catch(err => console.log(err))
   }
 
@@ -30,6 +75,7 @@ export default function EndDay() {
     }))
   }
 
+
   return (
     <div style={{
       display: 'flex',
@@ -44,6 +90,7 @@ export default function EndDay() {
       >
         <div style={{ gridColumnStart: 1 }}>
           <h2>Journal ^_^</h2>
+
           <i>New entry:</i>
           <form onSubmit={submitJournal}>
             <textarea
@@ -53,6 +100,27 @@ export default function EndDay() {
               value={journalEntry}
               onChange={e => setJournalEntry(e.target.value)}>
             </textarea><br />
+
+            {
+              values.map((val, id) => {
+                const value = val;
+                return (
+                  <div key={id} style={{ display: 'inline-block' }}>
+                    <label>
+                      <input
+                        type='checkbox'
+                        placeholder='values you want to embody'
+                        name='taggedValues'
+                        value={value}
+                        key={id}
+                        onChange={HandleCheckboxChange}
+                      />
+                      {value}
+                    </label>
+                  </div>
+                )
+              })
+            }
             <button>submit</button>
           </form>
 

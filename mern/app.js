@@ -62,6 +62,18 @@ app.get('/api', (req, res) => {
   }
 });
 
+app.get('/api/users/:id', (req, res) => {
+  const queriedUser = req.params.id;
+
+  User.findOne({ username: queriedUser }).exec()
+    .then(user => {
+      res.json(user.public)
+    })
+    .catch(err => {
+      res.status(404).json({ message: 'this user does not exist' })
+    })
+});
+
 app.get('/api/cards', async (req, res) => {
   // cards: { date: { routines: [], schedules: [] } }
   // const cards = {};

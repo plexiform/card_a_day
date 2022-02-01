@@ -1,5 +1,10 @@
 todo:
 
+/*
+  BRO TAG EACH JOURNAL ENTRY WHEN POSTING IT, FUCKKKKKKKKKKKKKKK
+  ALSO PUT REQUEST ON EACH CLICK OF A CHECKBOX TO THAT ENTRY
+    (HAVE ENTRIES EXPAND LEFTWARD <)
+    */
 - display today's sched in create schedule
 - PUT morning routine (to complete fast, meditation)
   - limit routine to 1/day

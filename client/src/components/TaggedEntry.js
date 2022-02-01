@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const Label = styled.label`
   
@@ -12,17 +13,7 @@ const Input = styled.input`
 `
 
 export default function TaggedEntry({ entry, values }) {
-  const [taggedValues, setTaggedValues] = useState([]);
 
-  const HandleCheckboxChange = e => {
-    if (e.target.checked) {
-      setTaggedValues([...taggedValues, e.target.value])
-    } else {
-      setTaggedValues(values => values.filter(checkedBox => {
-        return checkedBox !== e.target.value
-      }));
-    }
-  }
 
   return (
     <div>
@@ -30,22 +21,9 @@ export default function TaggedEntry({ entry, values }) {
       <br />
       <div style={{ textAlign: 'right', }}>
         {
-          values.map((val, id) => {
-            const value = val;
+          entry.values.map((val, id) => {
             return (
-              <div style={{ display: 'inline-block' }}>
-                <Label>
-                  <Input
-                    type='checkbox'
-                    placeholder='values you want to embody'
-                    name='taggedValues'
-                    value={value}
-                    key={id}
-                    onChange={HandleCheckboxChange}
-                  />
-                  {value}
-                </Label>
-              </div>
+              <div style={{ display: 'inline-block', fontSize: 12, marginRight: 5, backgroundColor: 'brown', fontStyle: 'italic' }}>{val}</div>
             )
           })
         }

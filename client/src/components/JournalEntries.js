@@ -17,6 +17,7 @@ export default function JournalEntries(props) {
     return date;
   };
 
+
   // beforeOrAfter is a String of 'before' or 'after'
   const aDayAway = (date, beforeOrAfter) => {
     const dateFormat = new Date(date);
@@ -56,7 +57,6 @@ export default function JournalEntries(props) {
       dayEntries.values = routineThisDay[0].routineItems.values;
     }
 
-    // setValues(dayEntries.values);
     return dayEntries.values;
   }
 
@@ -79,7 +79,6 @@ export default function JournalEntries(props) {
         setRoutineList(res.data);
         setIsLoading(false);
         setValues(valuesToday());
-        console.log(values);
       }).catch(err => console.log('couldnt retrieve routines'));
   }, [currentDate]);
 
@@ -88,7 +87,7 @@ export default function JournalEntries(props) {
 
       <h4>{currentDate}</h4>
       {!isLoading ?
-        <>
+        <>{/*
           <ul style={{ height: 100 }}>
             {
               valuesToday().map((val, id) => {
@@ -99,7 +98,7 @@ export default function JournalEntries(props) {
                 )
               })
             }
-          </ul>
+          </ul>*/}
           <div style={{ overflow: 'auto', height: '300px' }}>
             {
               dayEntries.map((entry, id) => {

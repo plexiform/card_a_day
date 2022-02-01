@@ -7,11 +7,12 @@ router.post('/journal', async (req, res) => {
   if (req.session.userId) {
     const user = await User.findOne({ username: req.session.userId }).exec();
     const entry = req.body.journalEntry;
-    console.log('testbod', req.body);
+    const values = req.body.values;
 
     await Journal.create({
       userId: user._id,
       journalEntry: entry,
+      values,
       date: new Date(Date.now())
     })
       .then(journal => res.json({ confirm: 'journal entry created!' }))
@@ -32,6 +33,14 @@ router.get('/entries', async (req, res) => {
   } else {
     res.status(403).json({ message: 'could not retrieve entries' })
   }
+})
+
+router.get('/entries/:id', async (req, res) => {
+  const user = await User.findOne({ username: req.params.id }).exec();
+
+  const entries = await Journal.find({ userId: user._id }).exec();
+  entries.sort((a, b) => b.date - a.date);
+  res.json(entries);
 })
 
 router.post('/threegoodthings', async (req, res) => {
