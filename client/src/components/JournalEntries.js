@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import TaggedEntry from './TaggedEntry';
 
 export default function JournalEntries(props) {
   const [entries, setEntries] = useState([]);
   const [routineList, setRoutineList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [values, setValues] = useState([])
 
   const convertFromUtc = (fullDate) => {
     // fullDate is a Date object
@@ -43,7 +45,7 @@ export default function JournalEntries(props) {
     return date === currentDate;
   });
 
-  function valuesToday() {
+  const valuesToday = () => {
     const routineThisDay = routineList.filter(routine => {
       return routine.routineItems.date.substr(0, 10) === currentDate;
     })
@@ -54,9 +56,9 @@ export default function JournalEntries(props) {
       dayEntries.values = routineThisDay[0].routineItems.values;
     }
 
+    // setValues(dayEntries.values);
     return dayEntries.values;
   }
-
 
   useEffect(() => {
     axios.get('http://localhost:8082/api/journals/entries',
@@ -76,8 +78,10 @@ export default function JournalEntries(props) {
       }).then(res => {
         setRoutineList(res.data);
         setIsLoading(false);
+        setValues(valuesToday());
+        console.log(values);
       }).catch(err => console.log('couldnt retrieve routines'));
-  }, []);
+  }, [currentDate]);
 
   return (
     <div>
@@ -105,7 +109,8 @@ export default function JournalEntries(props) {
                     borderBottomColor: 'brown',
                   }}>
                     <div style={{ textAlign: 'right', fontStyle: 'oblique' }}>{entry.date.split("T")[1].substr(0, 5)}</div>
-                    {entry.journalEntry}
+                    <TaggedEntry entry={entry} values={values} />
+
                   </div>
                 )
               })

@@ -6,6 +6,9 @@ const JournalSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  values: {
+    type: [String]
+  },
   date: {
     type: Date,
     required: true
