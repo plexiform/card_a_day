@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Login from './Login';
 import { Route } from 'react-router';
 import PrivateRoute from './PrivateRoute';
 import ShowRoutines from './ShowRoutines';
+import PublicProfile from './PublicProfile';
+import axios from 'axios';
 
 export default function Welcome() {
+  const [user, setUser] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    axios.get('http://localhost:8082/api', { withCredentials: true })
+      .then(res => {
+        setUser(res.data);
+        setIsLoading(false);
+      })
+      .catch(err => console.log(err))
+  }, []);
 
   return (
     <div style={{ display: 'grid', paddingTop: '2em' }}>
@@ -23,8 +36,8 @@ export default function Welcome() {
         <br /><br />
         The only requirement is honesty.
       </div>
-      <div style={{ gridColumnStart: 2, width: '400px', height: '500px', border: '1px white solid' }}>
-        <i>component sold separately</i>
+      <div style={{ gridColumnStart: 2 }}>
+        {!isLoading ? <PublicProfile username={user} /> : 'Loading'}
       </div>
     </div>
   )

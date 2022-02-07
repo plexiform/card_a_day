@@ -1,4 +1,7 @@
-export default function BlockAnalysis({ goalNames }) {
+import { useEffect, useState } from "react";
+
+export default function BlockAnalysis({ goalNames, isSorted }) {
+  const goalMinutes = {};
 
   const splitDate = (dateArg) => {
     const tzoffset = (new Date()).getTimezoneOffset() * 60000;
@@ -12,23 +15,53 @@ export default function BlockAnalysis({ goalNames }) {
     return [day, shortTime];
   };
 
+  const generateMins = () => {
+    const convNan = (num) => num || 0;
+
+    Object.keys(goalNames).forEach((goal) => {
+      goalNames[goal].forEach((sched) => {
+        if (sched) {
+          if (!goalMinutes[goal]) {
+            goalMinutes[goal] = convNan(goalMinutes[goal])
+          }
+
+          goalMinutes[goal] += (sched.timeBlock.numPomos * sched.timeBlock.pomoLength)
+        }
+      })
+    })
+  }
+
+  generateMins();
+
   return (
+
     <div>
       {
         Object.keys(goalNames).map((name, id) => {
           return (
-            <div>
-              {name}
-              {goalNames[name] && goalNames[name].map((sched, id) => {
-                if (sched) {
-                  return (
-                    <div>
-                      start: {sched.timeBlock.startTime}
-                      end: {sched.timeBlock.startTime}
-                    </div>
-                  )
-                }
-              })}
+            <div key={id}>
+              <b>{name}</b>
+              <span> //  {goalMinutes[name] / 60} hours total </span>
+              <div
+                style={{
+                  maxWidth: '50%',
+                  maxHeight: 100,
+                  overflowY: 'auto',
+                  borderBottom: '1px solid brown'
+                }}
+              >
+                {goalNames[name] && goalNames[name].map((sched, id) => {
+                  if (sched) {
+                    return (
+                      <div key={id}>
+                        <i>start</i>: {` ${splitDate(sched.timeBlock.startTime)[1]}, ${splitDate(sched.timeBlock.startTime)[0]}`}
+                        <span>   </span>
+                        <i>end</i>: {` ${splitDate(sched.timeBlock.endTime)[1]}, ${splitDate(sched.timeBlock.endTime)[0]}, ${sched.timeBlock.numPomos}/${sched.timeBlock.maxPomos} pomos`}
+                      </div>
+                    )
+                  }
+                })}
+              </div>
             </div>
           )
         })

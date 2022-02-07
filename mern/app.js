@@ -66,7 +66,7 @@ app.get('/api/users/:id', (req, res) => {
 
   User.findOne({ username: queriedUser }).exec()
     .then(user => {
-      res.json(user.public)
+      res.json(user)
     })
     .catch(err => {
       res.status(404).json({ message: 'this user does not exist' })

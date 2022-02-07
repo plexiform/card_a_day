@@ -6,6 +6,7 @@ export default function Analytics() {
   const [goals, setGoals] = useState([]);
   const [goalNames, setGoalNames] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [isSorted, setIsSorted] = useState(false);
 
   useEffect(() => {
     axios.get('http://localhost:8082/api/goals', { withCredentials: true })
@@ -23,21 +24,21 @@ export default function Analytics() {
       goal.goalTags.forEach(schedID => {
         axios.get(`http://localhost:8082/api/schedules/${schedID}`)
           .then(res => {
-            //setGoalNames(prevState => ({...prevState, []}))
             setGoalNames(prevState => ({
               ...prevState,
               [goal.goalName]: [...prevState[goal.goalName], res.data]
             }))
           })
+
           .catch(err => console.log(err))
       })
     });
-  }, [isLoading]);
 
+  }, [isLoading, isSorted]);
 
   return (
     <>
-      {!isLoading ? <BlockAnalysis goalNames={goalNames} /> : <>Loading</>}
+      {!isLoading ? <BlockAnalysis isLoading={isLoading} goalNames={goalNames} /> : <>Loading</>}
     </>
   )
 }
