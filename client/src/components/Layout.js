@@ -11,9 +11,13 @@ const LayoutStyle = styled.div`
 
 const TopBar = styled.div` 
     display:flex;
-    background:#9e9e9e;
+    background:#1f1f1f;
     height:5vh;
     align-items: center;
+    border-bottom: 1px solid;
+    border-image-slice: 1;
+    border-width: 3px;
+    border-image-source: linear-gradient(to right, brown, #1f1f1f);
   `;
 
 const LogoutStyle = styled.div`
@@ -53,6 +57,7 @@ const SidebarItem = styled.div`
   &:hover {
     background-color:#3c3c3c;
   }
+
 `;
 
 const StyledLink = styled(NavLink)`
@@ -69,6 +74,8 @@ const StyledLink = styled(NavLink)`
 const ContentStyle = styled.div`
     flex:1;
     max-width:90vw;
+    overflow:auto
+    
   `;
 
 export default function Layout({ children }) {
@@ -89,7 +96,7 @@ export default function Layout({ children }) {
             }}
             to='/welcome'
           >
-            c<span style={{ color: 'brown', fontSize: '.75em' }}>∀</span>rd
+            <span style={{ fontSize: '1.25em' }}>/<span style={{ color: 'brown' }}>∀</span></span>
           </Link>
           <LogoutStyle><LeftNav><NavLink to='/dashboard'>Dashboard</NavLink></LeftNav><Logout /></LogoutStyle>
         </TopBar>
@@ -102,9 +109,9 @@ export default function Layout({ children }) {
 
             <StyledLink name='conclusion' to='/end-day'><SidebarItem>Reflect on your day</SidebarItem></StyledLink>
 
-            <StyledLink name='cards' to='/day-cards'><SidebarItem>Calendar</SidebarItem></StyledLink>
+            <StyledLink align='right' name='cards' to='/day-cards'><SidebarItem>Calendar</SidebarItem></StyledLink>
 
-
+            <StyledLink align='right' name='analytics' to='/analytics'><SidebarItem>Analytics</SidebarItem></StyledLink>
           </Sidebar>
 
 

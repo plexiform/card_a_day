@@ -54,7 +54,6 @@ app.use('/api/journals', journals); // access to journals + threeGoodThings entr
 // changed '/' to '/api' to prevent conflict on heroku
 app.get('/api', (req, res) => {
   //console.log('id:', req.session)
-  console.log('server port', process.env.PORT);
   if (req.session.userId) {
     res.json(req.session.userId);
   } else {
@@ -153,12 +152,6 @@ app.get('/api/cards', async (req, res) => {
       const date = convertFromUtc(schedule.timeBlock.startTime);
       const monthNo = date.substring(5, 7);
       const year = date.substring(0, 4);
-      /*
-      if (monthNo == '01') {
-        console.log('hello from Jan (01)!', Boolean(Object.keys(cards[monthNo - 1][1].length === 0)));
-      } // TRUE, it is empty, so we call generateCalenderMonth...
-
-      */
 
       if (Object.keys(cards[monthNo - 1][1]).length === 0) {
         generateCalendarMonth(monthNo, year);

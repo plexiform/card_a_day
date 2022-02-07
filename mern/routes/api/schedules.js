@@ -17,6 +17,13 @@ router.get('/', async (req, res) => {
   res.end();
 })
 
+router.get('/:id', async (req, res) => {
+  const id = req.params.id;
+  const taggedScheds = await Schedule.findById(id);
+
+  res.json(taggedScheds);
+});
+
 router.post('/aggregate', async (req, res) => {
   const user = await User.findOne({ username: req.session.userId }).exec();
 

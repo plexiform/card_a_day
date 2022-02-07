@@ -17,6 +17,7 @@ import DayCardes from './components/DayCardes';
 import Dashboard from './components/Dashboard';
 import EndDay from './components/EndDay';
 import PublicProfile from './components/PublicProfile';
+import Analytics from './components/Analytics';
 
 function App() {
   const credentialsState = useState({});
@@ -72,6 +73,11 @@ function App() {
             </Route>
 
             <Route exact path='/register' component={Register} />
+
+            <Route path='/analytics'>
+              <PrivateRoute component={Analytics}>
+              </PrivateRoute>
+            </Route>
 
             <Route path='/:profile'>
               <PublicProfile />
