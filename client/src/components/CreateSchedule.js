@@ -3,6 +3,7 @@ import axios from 'axios';
 import ShowSchedule from './TodaySchedule';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
+import PrimaryDiv from './styles/PrimaryDiv';
 
 class CreateSchedule extends React.Component {
   constructor() {
@@ -173,7 +174,7 @@ class CreateSchedule extends React.Component {
   render() {
 
     return (
-      <div>
+      <PrimaryDiv fadeTo='#fb3570'>
         <form
           style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 2fr', gridTemplateRows: '1fr 1fr 1fr' }}
           onSubmit={this.handleSubmit}
@@ -264,7 +265,7 @@ class CreateSchedule extends React.Component {
 
 
         <hr />
-      </div >
+      </PrimaryDiv>
     )
   }
 }

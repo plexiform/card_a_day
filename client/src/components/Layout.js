@@ -74,8 +74,7 @@ const StyledLink = styled(NavLink)`
 const ContentStyle = styled.div`
     flex:1;
     max-width:90vw;
-    overflow:auto
-    
+    overflow:auto;
   `;
 
 export default function Layout({ children }) {
@@ -96,7 +95,12 @@ export default function Layout({ children }) {
             }}
             to='/welcome'
           >
-            <span style={{ fontSize: '1.25em' }}>/<span style={{ color: 'brown' }}>∀</span></span>
+            <span style={{
+              fontSize: '1.25em',
+              backgroundImage: 'linear-gradient(45deg, darkorchid, #fb3570)',
+              WebkitBackgroundClip: 'text',
+              color: 'transparent'
+            }}>/∀</span>
           </Link>
           <LogoutStyle><LeftNav><NavLink to='/dashboard'>Dashboard</NavLink></LeftNav><Logout /></LogoutStyle>
         </TopBar>

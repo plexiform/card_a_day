@@ -120,7 +120,6 @@ class CreateRoutine extends React.Component {
   render() {
     return (
       <div style={{ width: '50%' }} className="CreateRoutine ">
-        <h3>Show already created routine on this page</h3>
         <div style={{ float: 'right' }}>{this.state.date}</div>
         <div>Deadline: {this.state.deadline}
         </div>

@@ -1,26 +1,18 @@
 todo:
 
-/*
-  BRO TAG EACH JOURNAL ENTRY WHEN POSTING IT, FUCKKKKKKKKKKKKKKK
-  ALSO PUT REQUEST ON EACH CLICK OF A CHECKBOX TO THAT ENTRY
-    (HAVE ENTRIES EXPAND LEFTWARD <)
-    */
 - display today's sched in create schedule
 - PUT morning routine (to complete fast, meditation)
   - limit routine to 1/day
   - introduce timer to meditation to make it more self-contained (voice recording too)
+
 - update button stays after time passes (w/o updating percent when clicked)
 - implement years
 - preset schedule structures + time blocks (2.5h etc)
   (e.g. my structure rn is [([webdev OR alg] + prob) -> [math OR/THEN lCPP OR/THEN gamemath] -> draw]) ->
     turns into [graphql/next + econometrics/R] -> gamemath (eventually dasgupta/viz, and after that, networks) -> draw)
-- deadline on morning routine?
 - smarter date inputs + defaults
 - card sharing
-- goals on timeblocks
-- notes on timeblocks
 - modularize some functions in day-cardes
--
 
 
 8-5
