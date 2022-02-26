@@ -19,11 +19,13 @@ router.get('/', async (req, res) => {
   res.end();
 });
 
+// :id is username
+router.get('/:id', async (req, res) => {
+  const user = await User.findOne({ username: req.params.id }).exec();
 
-router.get('/:id', (req, res) => {
-  Routine.findById(req.params.id)
-    .then(routine => res.json(routine))
-    .catch(err => res.status(404).json({ routinenotfound: 'Routine not found' }));
+  const routines = await Routine.find({ userId: user._id }).exec();
+  routines.sort((a, b) => b.routineItems.date - a.routineItems.date);
+  res.json(routines);
 })
 
 router.post('/', async (req, res) => {

@@ -22,6 +22,16 @@ const CardStyle = styled.div`
     
     overflow:auto;
     ${props => (props.current === true) ? `border-width:5px;` : ``}
+    //${props => (!props.percent && (props.percent !== 0)) && `background: #000000`};
+    ${props => (props.percent === 0) && `
+      background: repeating-linear-gradient(
+        45deg,
+        maroon,
+        maroon 20px,
+        #2c2c2c 20px,
+        #2c2c2c 40px
+      );
+    `}
     ${props => (props.percent >= 1 && props.percent < 33.34) && `background-color:#ff000040`}
     ${props => (props.percent > 33.34 && props.percent < 66.6666667) && `background-color:#4EDABE50`}
     ${props => (props.percent >= 66.6666667 && props.percent <= 100) && `background-color:#00ff0030`}

@@ -82,6 +82,11 @@ function App() {
             <Route path='/:profile'>
               <PublicProfile />
             </Route>
+
+            <Route path='/:profile/:date'>
+              <PublicProfile />
+            </Route>
+
           </Switch>
         </Router>
 

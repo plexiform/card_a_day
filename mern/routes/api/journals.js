@@ -35,6 +35,7 @@ router.get('/entries', async (req, res) => {
   }
 })
 
+// :id is username
 router.get('/entries/:id', async (req, res) => {
   const user = await User.findOne({ username: req.params.id }).exec();
 

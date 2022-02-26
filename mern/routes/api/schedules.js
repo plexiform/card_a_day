@@ -17,11 +17,21 @@ router.get('/', async (req, res) => {
   res.end();
 })
 
+// :id is schedule id
 router.get('/:id', async (req, res) => {
   const id = req.params.id;
   const taggedScheds = await Schedule.findById(id);
 
   res.json(taggedScheds);
+});
+
+// /u/:id is username
+router.get('/u/:id', async (req, res) => {
+  const user = await User.findOne({ username: req.params.id }).exec();
+
+  const schedules = await Schedule.find({ userId: user._id }).exec();
+  schedules.sort((a, b) => b.timeBlock.startTime - a.timeBlock.startTime);
+  res.json(schedules);
 });
 
 router.post('/aggregate', async (req, res) => {

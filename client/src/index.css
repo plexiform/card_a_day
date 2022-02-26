@@ -6,15 +6,24 @@ html, body {
     
     margin: 0;
     padding: 0;
-    background:#1f1f1f;
+    background:#262626;
     color:#bdbdbd;
 }
 
 body {
   margin: 0;
-  font-family: open-sans, sans-serif;
+  font-family: open-sans-light, sans-serif;
   height:100%;
 }
+/*
+{{
+          gridColumnStart: 1,
+          fontFamily: 'open-sans-condensed',
+          fontSize: '2em',
+          width: '500px',
+          paddingLeft: '1em'
+        }}
+*/
 
 textarea:focus {
   outline: none;
