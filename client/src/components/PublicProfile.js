@@ -126,14 +126,18 @@ export default function PublicProfile({ username }) {
             }
 
             {
-              <Accordion menuName='Routine' >
+              <Accordion menuName='Scheduled time' >
                 {
                   schedules.filter(sched => splitDate(sched.timeBlock.startTime)[0] === currentDate)
                     .map((sched, id) => {
                       return (
                         <div key={id}>
-                          {sched.timeBlock.startTime} -
-                          {sched.timeBlock.endTime}
+                          {`
+                          ${splitDate(sched.timeBlock.startTime)[1]} to
+                          ${splitDate(sched.timeBlock.endTime)[1]}
+                          `
+                          }
+
                         </div>
                       )
                     })

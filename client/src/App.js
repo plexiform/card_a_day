@@ -21,15 +21,33 @@ import Analytics from './components/Analytics';
 
 function App() {
   const credentialsState = useState({});
+  const [isLoggedIn, setLogged] = useState(false);
 
+  useEffect(() => {
+
+    axios.get('http://localhost:8082/api', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    }).then(res => {
+      if (typeof res.data == 'string') {
+        setLogged(true);
+      }
+    })
+
+
+  })
   return (
     <div>
       <CredentialsContext.Provider value={credentialsState}>
 
         <Router>
           <Switch>
-            <Route exact path='/' component={Login} >
+            <Route exact path='/'  >
+              {isLoggedIn ? <Redirect to="/welcome" /> : <Login />}
             </Route>
+
             <Route exact path='/login'>
               <LoginContainer component={Login}></LoginContainer>
             </Route>

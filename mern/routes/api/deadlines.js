@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 })
 
 router.put('/:id', async (req, res) => {
-  Deadline.findByIdAndUpdate(req.params.id, { $set: { deadline: req.body.deadline } })
+  Deadline.findByIdAndUpdate(req.params.id, { $set: { deadline: req.body.deadline, timePosted: new Date } })
     .then(deadline => {
       res.json({ message: 'deadline updated!' })
     })

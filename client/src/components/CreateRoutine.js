@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { CredentialsContext } from '../context';
+import PrimaryDiv from './styles/PrimaryDiv';
 
 class CreateRoutine extends React.Component {
   static contextType = CredentialsContext;
@@ -41,7 +42,8 @@ class CreateRoutine extends React.Component {
       withCredentials: true
     }).then(res => {
       this.setState({
-        deadline: res.data.deadline
+        deadline: res.data.deadline,
+        timePosted: res.data.timePosted
       })
     }).catch(err => {
       console.log(err);
@@ -119,133 +121,138 @@ class CreateRoutine extends React.Component {
 
   render() {
     return (
-      <div style={{ width: '50%' }} className="CreateRoutine ">
-        <div style={{ float: 'right' }}>{this.state.date}</div>
-        <div>Deadline: {this.state.deadline}
-        </div>
-        {new Date(new Date() - (new Date().getTimezoneOffset() * 60000)).toISOString()
-          < `${new Date(new Date() - (new Date().getTimezoneOffset() * 60000)).toISOString().split("T")[0].substr(0, 10)}T${this.state.deadline}:00` ?
-          <div>
-            Start your day right.
-            <form noValidate onSubmit={this.handleSubmit}>
-              <div>
-                <input
-                  style={{ width: '100%' }}
-                  autoComplete="off"
-                  type='text'
-                  placeholder='things youre grateful for'
-                  name='gratitude'
-                  value={this.state.gratitude}
-                  onChange={this.handleChange}
-                />
-              </div>
-
-              <div
-              >
-                <span>Values to embody: </span>
-                {
-                  this.state.values.map((val, id) => {
-                    const value = val.valueAndReason.value;
-                    return (
-                      <div
-                        style={{ display: 'inline-block' }}>
-                        <input
-                          type='checkbox'
-                          className='valueButton'
-                          placeholder='values you want to embody'
-                          name='postVals'
-                          value={value}
-                          id={id}
-                          onChange={this.handleCheckboxChange}
-                        />
-                        <label id='valueLabel' for={id}>{value}</label>
-                      </div>
-                    )
-                  })
-                }
-              </div>
-
-              {/* !!!*/}
-
-              <div>
-                <textarea
-                  style={{ width: '100%', height: '100px', border: '1 solid white' }}
-                  autocomplete="off"
-                  placeholder='why are you focusing on these values today?'
-                  name='value_affirmation'
-                  value={this.state.value_affirmation}
-                  onChange={this.handleChange}
-                />
-              </div>
-
-              <div>
-                <input
-                  type='radio'
-                  id='meditated'
-                  data-key='meditated'
-                  checked={this.state.meditated}
-                  onClick={this.handleToggleChange}
-                >
-                </input>
-                <label for='meditated'>Did you meditate?</label>
-              </div>
-
-              {this.state.meditated &&
+      <PrimaryDiv fadeTo='orange'>
+        <div style={{ width: '50%' }} className="CreateRoutine ">
+          <div style={{ float: 'right' }}>{this.state.date}</div>
+          <div>Deadline: {this.state.deadline}
+          </div>
+          {new Date(new Date() - (new Date().getTimezoneOffset() * 60000)).toISOString()
+            < `${new Date(new Date() - (new Date().getTimezoneOffset() * 60000)).toISOString().split("T")[0].substr(0, 10)}T${this.state.deadline}:00`
+            ?
+            <div>
+              Start your day right.
+              <form noValidate onSubmit={this.handleSubmit}>
                 <div>
-                  <div>
-                    <input
-                      style={{ width: '100%' }}
-                      autocomplete="off"
-                      type='text'
-                      placeholder='what type of meditation did you do?'
-                      name='type_of_meditation'
-                      value={this.state.type_of_meditation}
-                      onChange={this.handleChange}
-                    />
-                  </div>
-
-                  <div>
-                    <input
-                      style={{ width: '100%' }}
-                      autocomplete="off"
-                      type='number'
-                      placeholder='how long did you meditate for?'
-                      name='minutes_spent'
-                      value={this.state.minutes_spent}
-                      onChange={this.handleChange}
-                    />
-                  </div>
+                  <input
+                    style={{ width: '100%' }}
+                    autoComplete="off"
+                    type='text'
+                    placeholder='things youre grateful for'
+                    name='gratitude'
+                    value={this.state.gratitude}
+                    onChange={this.handleChange}
+                  />
                 </div>
-              }
 
-              <div>
-                <input
-                  type='radio'
-                  id='completed_fast'
-                  placeholder='did you complete your fast?'
-                  name='completed_fast'
-                  checked={this.state.completed_fast}
-                  value={this.state.completed_fast}
-                  defaultValue={false}
-                  data-key='completed_fast'
-                  onClick={this.handleToggleChange}
-                  readOnly
-                />
-                <label for='completed_fast'>Did you complete your fast?</label>
-                <span>[x]exercise?</span>
-              </div>
+                <div
+                >
+                  <span>Values to   : </span>
+                  {
+                    this.state.values.map((val, id) => {
+                      const value = val.valueAndReason.value;
+                      return (
+                        <div
+                          style={{ display: 'inline-block' }}>
+                          <input
+                            type='checkbox'
+                            className='valueButton'
+                            placeholder='values you want to embody'
+                            name='postVals'
+                            value={value}
+                            id={id}
+                            onChange={this.handleCheckboxChange}
+                          />
+                          <label id='valueLabel' for={id}>{value}</label>
+                        </div>
+                      )
+                    })
+                  }
+                </div>
 
-              <button
-                type="submit"
-              >
-                submit
-              </button>
-            </form>
-          </div >
-          :
-          <></>
-        }
-      </div>
+                {/* !!!*/}
+
+                <div>
+                  <textarea
+                    style={{ width: '100%', height: '100px', border: '1 solid white' }}
+                    autocomplete="off"
+                    placeholder='why are you focusing on these values today?'
+                    name='value_affirmation'
+                    value={this.state.value_affirmation}
+                    onChange={this.handleChange}
+                  />
+                </div>
+
+                <div>
+                  <input
+                    type='radio'
+                    id='meditated'
+                    data-key='meditated'
+                    checked={this.state.meditated}
+                    onClick={this.handleToggleChange}
+                  >
+                  </input>
+                  <label for='meditated'>Did you meditate?</label>
+                </div>
+
+                {this.state.meditated &&
+                  <div>
+                    <div>
+                      <input
+                        style={{ width: '100%' }}
+                        autocomplete="off"
+                        type='text'
+                        placeholder='what type of meditation did you do?'
+                        name='type_of_meditation'
+                        value={this.state.type_of_meditation}
+                        onChange={this.handleChange}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        style={{ width: '100%' }}
+                        autocomplete="off"
+                        type='number'
+                        placeholder='how long did you meditate for?'
+                        name='minutes_spent'
+                        value={this.state.minutes_spent}
+                        onChange={this.handleChange}
+                      />
+                    </div>
+                  </div>
+                }
+
+                <div>
+                  <input
+                    type='radio'
+                    id='completed_fast'
+                    placeholder='did you complete your fast?'
+                    name='completed_fast'
+                    checked={this.state.completed_fast}
+                    value={this.state.completed_fast}
+                    defaultValue={false}
+                    data-key='completed_fast'
+                    onClick={this.handleToggleChange}
+                    readOnly
+                  />
+                  <label for='completed_fast'>Did you complete your fast?</label>
+                  <span>[x]exercise?</span>
+                </div>
+
+                <button
+                  type="submit"
+                >
+                  submit
+                </button>
+              </form>
+            </div >
+            :
+            <>
+              The deadline has passed.
+            </>
+          }
+        </div>
+      </PrimaryDiv>
     )
   }
 }

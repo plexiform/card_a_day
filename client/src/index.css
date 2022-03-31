@@ -50,17 +50,20 @@ input {
 }
 
 .valueButton:checked ~ #valueLabel  {
-  background-color:green;
+  background-color:#ff4500;;
+  color:white;
 }
 
 #valueLabel {
   padding:2px 10px 2px 10px;
   border-radius:20px;
-  background-color:gray;
+  background-color:orange;
+  color:#ff4500;
 }
 
 #valueLabel:hover {
-  background-color: #2c2c2c;
+  background-color: rgb(255, 154, 30);
+  color:white;
   transition: .2s 
 }
 
@@ -100,7 +103,7 @@ button:hover {
   border-top-style:solid;
   border-top-width:5px;
   border-top-color:turquoise;
-  background-color:#1f1f1f;
+  background-color:#262626
 }
 
 a {

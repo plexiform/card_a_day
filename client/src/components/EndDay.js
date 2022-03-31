@@ -5,11 +5,23 @@ import PrimaryDiv from './styles/PrimaryDiv';
 
 export default function EndDay() {
   const [journalEntry, setJournalEntry] = useState('');
-  const [threeGoodThings, setThreeGoodThings] = useState({ first: "", second: "", third: "" });
+  const [threeGoodThings, setThreeGoodThings] =
+    useState({
+      firstGoodThing: "",
+      secondGoodThing: "",
+      thirdGoodThing: "",
+      firstCause: "",
+      secondCause: "",
+      thirdCause: ""
+    });
   const [routineList, setRoutineList] = useState([]);
 
   const [values, setValues] = useState([]);
   const [taggedValues, setTaggedValues] = useState([]);
+
+  const [firstComplete, setFirstComplete] = useState(false);
+  const [secondComplete, setSecondComplete] = useState(false);
+  const [thirdComplete, setThirdComplete] = useState(false);
 
   const HandleCheckboxChange = e => {
     if (e.target.checked) {
@@ -65,14 +77,40 @@ export default function EndDay() {
 
   const submitThreeGoodThings = e => {
     e.preventDefault();
+
+    axios.post('http://localhost:8082/api/journals/threegoodthings',
+      {
+        first: {
+          goodThing: threeGoodThings.firstGoodThing,
+          cause: threeGoodThings.firstCause
+        },
+        second: {
+          goodThing: threeGoodThings.secondGoodThing,
+          cause: threeGoodThings.secondCause
+        },
+        third: {
+          goodThing: threeGoodThings.thirdGoodThing,
+          cause: threeGoodThings.thirdCause
+        }
+      },
+      {
+        withCredentials: true
+      })
+      .then(setThreeGoodThings({
+        firstGoodThing: "",
+        secondGoodThing: "",
+        thirdGoodThing: "",
+        firstCause: "",
+        secondCause: "",
+        thirdCause: ""
+      }))
+      .catch()
   }
 
   const handleThreeChange = e => {
-    const { name, value } = e.target;
-
     setThreeGoodThings(prevState => ({
       ...prevState,
-      [name]: value
+      [e.target.name]: e.target.value
     }))
   }
 
@@ -125,42 +163,10 @@ export default function EndDay() {
               <button>submit</button>
             </form>
 
-            <i>Three good things: </i>
-            <form onSubmit={submitThreeGoodThings}>
-              <ol>
-                <li>
-                  <input
-                    name="first"
-                    type="text"
-                    onChange={handleThreeChange}
-                  >
 
-                  </input>
-                </li>
-                <li>
-                  <input
-                    name="second"
-                    type="text"
-                    onChange={handleThreeChange}
-                  >
-
-                  </input>
-                </li>
-                <li>
-                  <input
-                    name="third"
-                    type="text"
-                    onChange={handleThreeChange}
-                  >
-
-                  </input>
-                </li>
-              </ol>
-            </form>
 
           </div>
         </PrimaryDiv>
-
 
         <div style={{ gridColumnStart: 2, minWidth: '600px', width: '50%', justifyContent: 'right' }}>
           <PrimaryDiv fadeTo='darkorchid'>
@@ -168,7 +174,89 @@ export default function EndDay() {
           </PrimaryDiv>
         </div>
 
+        <PrimaryDiv fadeTo='magenta' style={{ gridColumn: '1/3', width: '96.5%' }}>
+          <i>Three good things: </i>
+          <form onSubmit={submitThreeGoodThings}>
 
+            <ol style={{ width: '400px' }}>
+              <li>
+                <textarea
+                  style={{ width: '100%' }}
+                  name="firstGoodThing"
+                  type="text"
+                  placeholder="something good that happened today (in detail!)"
+                  onChange={handleThreeChange}
+                />
+                <br />
+                ↳ Because...
+                <input
+                  style={{ width: '100%' }}
+                  name="firstCause"
+                  type="text"
+                  onChange={handleThreeChange}
+                  autoComplete='off'
+                />
+                <button type="button" onClick={() => setFirstComplete(true)}>+</button>
+              </li>
+
+
+              {firstComplete &&
+                <li>
+                  <textarea
+                    style={{ width: '100%' }}
+                    name="secondGoodThing"
+                    type="text"
+                    placeholder="something good that happened today"
+                    onChange={handleThreeChange}
+                    autoComplete='off'
+                  />
+                  <br />
+                  ↳ Because...
+                  <input
+                    style={{ width: '100%' }}
+                    name="secondCause"
+                    type="text"
+                    onChange={handleThreeChange}
+                    autoComplete='off'
+                  />
+                  <button type="button" onClick={() => setSecondComplete(true)}>+</button>
+                </li>
+              }
+
+              {secondComplete &&
+                <li>
+                  <textarea
+                    style={{ width: '100%' }}
+                    name="thirdGoodThing"
+                    type="text"
+                    placeholder="something good that happened today"
+                    onChange={handleThreeChange}
+                    autoComplete='off'
+                  />
+                  <br />
+                  ↳ Because...
+                  <input
+                    style={{ width: '100%' }}
+                    name="thirdCause"
+                    type="text"
+                    onChange={handleThreeChange}
+                    autoComplete='off'
+                  />
+                </li>
+
+
+              }
+              {(
+                threeGoodThings.firstCause && threeGoodThings.firstCause
+                &&
+                threeGoodThings.secondCause && threeGoodThings.secondCause
+                &&
+                threeGoodThings.thirdCause && threeGoodThings.thirdCause
+              )
+                && <button onSubmit={submitThreeGoodThings} type="submit">submit</button>}
+            </ol>
+          </form>
+        </PrimaryDiv>
       </ div>
     </div >
   )

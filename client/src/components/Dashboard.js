@@ -41,22 +41,36 @@ export default function Dashboard() {
         setGoal('');
       })
       .catch(err => console.log('no creato goalo'))
+
   }
 
   function handleDeadlineUpdate(e) {
     e.preventDefault();
 
-    axios.put('http://localhost:8082/api/deadlines/' + deadlineObj._id,
-      {
-        deadline
-      },
-      {
-        withCredentials: true
-      }).then(res => {
-        console.log(res.message);
-      }).catch(err => {
-        console.log('couldn\'t update deadline')
-      })
+
+    if (
+      (
+        new Date(new Date() - (new Date().getTimezoneOffset() * 60000))
+        - (new Date(deadlineObj.timePosted) - (new Date(deadlineObj.timePosted).getTimezoneOffset() * 60000))
+        < (24 * 60 * 60 * 1000)
+      )) {
+      alert(
+        `It's been less than 24h since you updated your deadline.`
+      )
+
+    } else {
+      axios.put('http://localhost:8082/api/deadlines/' + deadlineObj._id,
+        {
+          deadline
+        },
+        {
+          withCredentials: true
+        }).then(res => {
+          console.log(res.message);
+        }).catch(err => {
+          console.log('couldn\'t update deadline')
+        })
+    }
   };
 
   useEffect(() => {

@@ -32,12 +32,10 @@ export default function Login() {
           withCredentials: true,
         })
         .then((res) => {
-          console.log('res:', res);
           setCredentials({
             username: res.data.userId
           });
 
-          console.log(CredentialsContext);
           history.push('/welcome');
         })
     }

@@ -168,7 +168,7 @@ export default function DayCardes() {
 
       return (
         <CardStyle key={id} percent={cardPercent[card]} current={card === splitDate(new Date())[0]}>
-          <div>⤡<i style={{ float: 'right' }}>{card}</i></div><br />
+          <div><i style={{ float: 'right' }}>{card}</i></div><br /><br />
 
           {currentRoutines}
           {totalMins[card] > 0 ?

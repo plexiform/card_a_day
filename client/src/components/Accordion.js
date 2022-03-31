@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Accordion = ({ menuName, children }) => {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
   const isOpen = menuName === expanded;
 
   return (
@@ -14,6 +14,11 @@ const Accordion = ({ menuName, children }) => {
         onClick={() => setExpanded(isOpen ? false : menuName)}
       >
         {menuName}
+        <span style={{
+          fontSize: '.75em', width: '95%', textAlign: 'right'
+        }}>
+          {isOpen ? <span>        ▼</span> : <span>        ►</span>}
+        </span>
       </motion.header>
       <AnimatePresence>
         {isOpen && (
@@ -26,7 +31,7 @@ const Accordion = ({ menuName, children }) => {
               open: { opacity: 1, height: "auto" },
               collapsed: { opacity: 0, height: 0 }
             }}
-            transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+            transition={{ duration: 0.2, ease: [0.04, 0.62, 0.23, 0.5] }}
           >
             {children}
           </motion.section>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { CredentialsContext } from '../context';
 import { useHistory, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 class Logout extends React.Component {
   static contextType = CredentialsContext;
@@ -11,6 +12,14 @@ class Logout extends React.Component {
     this.state = {};
 
     this.clearUser = this.clearUser.bind(this);
+    this.LogoutStyle = styled.button`
+      border:none;
+      background:transparent;
+      &:hover {
+        color:white;
+        background-color:transparent;
+      }
+    `
   }
 
   clearUser = (e) => {
@@ -29,11 +38,15 @@ class Logout extends React.Component {
     this.props.history.push('/login')
   }
 
+
   render() {
     return (
-      <button type="submit" onClick={this.clearUser} >
+      <this.LogoutStyle
+        type="submit"
+        onClick={this.clearUser}
+      >
         Log out
-      </button>
+      </this.LogoutStyle>
     )
   }
 }

@@ -22,7 +22,6 @@ class PrivateRoute extends React.Component {
       },
       withCredentials: true
     }).then((res) => {
-      console.log('data ', res);
       if (typeof res.data == 'string') {
         this.setState({ isLoggedIn: true }, () => {
           this.setState({ isLoggedIn: true, isLoaded: true, navigate: false })

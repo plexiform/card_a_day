@@ -2,12 +2,40 @@ const mongoose = require('mongoose');
 
 const ThreeGoodThingsSchema = mongoose.Schema({
   userId: mongoose.Schema.ObjectId,
-  threeGoodThings: {
-    type: [String],
-    required: true
+  first: {
+    goodThing: {
+      type: String,
+      required: true
+    },
+    cause: {
+      type: String,
+      required: true
+    },
+  },
+  second: {
+    goodThing: {
+      type: String,
+      required: true
+    },
+    cause: {
+      type: String,
+      required: true
+    },
+  },
+  third: {
+    goodThing: {
+      type: String,
+      required: true
+    },
+    cause: {
+      type: String,
+      required: true
+    },
   },
   date: {
     type: Date,
-    required: true
+    default: Date.now
   }
 })
+
+module.exports = Dashboard = mongoose.model('threegoodthings', ThreeGoodThingsSchema);

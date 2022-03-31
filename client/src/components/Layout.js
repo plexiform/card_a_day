@@ -28,7 +28,6 @@ const LogoutStyle = styled.div`
 
 const LeftNav = styled.div`
     margin-right:1em;
-    
   `;
 
 const BodyContainer = styled.div`
@@ -45,6 +44,15 @@ const Sidebar = styled.div`
     flex-direction:column; 
     height:100%;
   `;
+
+const CogStyle = styled.span`
+  color: #bdbdbd;
+  font-size: 2em;
+  transition: 0.2s;
+  &:hover {
+    color:magenta
+  }
+`
 
 const SidebarItem = styled.div`
   padding:1em;
@@ -102,7 +110,17 @@ export default function Layout({ children }) {
               color: 'transparent'
             }}>/∀</span>
           </Link>
-          <LogoutStyle><LeftNav><NavLink to='/dashboard'>Dashboard</NavLink></LeftNav><Logout /></LogoutStyle>
+          <LogoutStyle>
+            <LeftNav>
+              <NavLink to='/dashboard'>
+                <CogStyle>
+                  ⚙
+                </CogStyle>
+              </NavLink>
+            </LeftNav>
+
+            <Logout />
+          </LogoutStyle>
         </TopBar>
 
         <BodyContainer>

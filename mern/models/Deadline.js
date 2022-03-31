@@ -5,6 +5,9 @@ const DeadlineSchema = mongoose.Schema({
   deadline: {
     type: String,
     default: '09:00'
+  },
+  timePosted: {
+    type: Date
   }
 })
 
