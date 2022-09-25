@@ -7,9 +7,12 @@ const CollapsibleStyle = styled.div`
 `
 const ExpanderStyle = styled.div`
     transition: all 0.2s ease;
-    font-style:italic;
+    font-style: oblique;
+    font-weight: bold;
+    color:gold;
+  
     &:hover {
-      background-color: white;
+      background-color: black;
       cursor: crosshair;
     }
 `

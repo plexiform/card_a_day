@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs');
 
 
 router.get('/', async (req, res) => {
-
   if (req.session.userId) {
     const user = await User.findOne({ username: req.session.userId }).exec();
     const routines = await Routine.find({ userId: user._id }).exec();
@@ -16,7 +15,6 @@ router.get('/', async (req, res) => {
     res.status(403);
     res.json({ message: 'couldnt fetch' });
   }
-  res.end();
 });
 
 // :id is username

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function BlockAnalysis({ goalNames, isSorted }) {
+export default function BlockAnalysis({ goalNames, isSorted, routines }) {
   const goalMinutes = {};
 
   const splitDate = (dateArg) => {
@@ -66,6 +66,21 @@ export default function BlockAnalysis({ goalNames, isSorted }) {
           )
         })
       }
+      <div>
+        {
+          routines.map((routine, id) => {
+            return (
+              <div styles={{ minWidth: '500px' }}>
+                <b>
+                  {routine.routineItems.date.split('T')[0]}
+                </b>
+                ~
+                {routine.routineItems.type_of_meditation}
+              </div>
+            )
+          })
+        }
+      </div>
     </div>
   )
 }

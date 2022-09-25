@@ -44,12 +44,26 @@ router.get('/entries/:id', async (req, res) => {
   res.json(entries);
 })
 
+router.get('/threegoodthings/:date', async (req, res) => {
+  if (req.session.userId) {
+    const user = await User.findOne({ username: req.session.userId }).exec();
+    const date = req.params.date;
+
+    const threeGoodThings =
+      await ThreeGoodThings.find({
+        userId: user._id,
+      }).exec();
+
+    res.json(threeGoodThings);
+  } else {
+    res.status(403).json({ message: 'could not retrieve 3 good things' })
+  }
+});
+
 router.post('/threegoodthings', async (req, res) => {
   if (req.session.userId) {
     const user = await User.findOne({ username: req.session.userId }).exec();
     const { first, second, third } = req.body;
-    console.log('first', first, 'second', second, 'third', third);
-    console.log('req', req.body);
 
     await ThreeGoodThings.create({
       userId: user._id,
@@ -63,7 +77,7 @@ router.post('/threegoodthings', async (req, res) => {
       },
       third: {
         goodThing: third.goodThing,
-        cause: second.cause
+        cause: third.cause
       }
     })
   } else {

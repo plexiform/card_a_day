@@ -15,6 +15,7 @@ class CreateSchedule extends React.Component {
       breakLength: 5,
       numPomos: 0,
       maxPomos: '',
+      remainder: '',
       getGoals: [],
       goal: '',
       confirmed: false
@@ -46,7 +47,8 @@ class CreateSchedule extends React.Component {
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
-      confirmed: false
+    }, () => {
+      this.setMaxPomos();
     })
   }
 
@@ -54,7 +56,8 @@ class CreateSchedule extends React.Component {
     this.setState(
       {
         startTime: e.target.value,
-        confirmed: false
+      }, () => {
+        this.setMaxPomos();
       });
 
   }
@@ -63,7 +66,9 @@ class CreateSchedule extends React.Component {
     this.setState(
       {
         endTime: e.target.value,
-        confirmed: false
+        //        confirmed: false
+      }, () => {
+        this.setMaxPomos();
       });
   }
 
@@ -72,25 +77,26 @@ class CreateSchedule extends React.Component {
   }
 
   getMaxPomos = (totalMinutes, pomoLength, breakLength) => {
-    /*
-    let totalPomosNoBreaks = totalMinutes / pomoLength;
-    let numberOfBreaks = totalPomosNoBreaks > 1 ? totalPomosNoBreaks - 1 : 0;
-    let minutesOfBreaks = numberOfBreaks * breakLength;
-   
-    return Math.floor((totalMinutes - minutesOfBreaks) / pomoLength);
-    */
+
     let timePassed = 0;
     let pomoCount = 0;
-    // !!! bug: still adds a pomo even if there's less than the allotted pomo time left
-    while (timePassed < totalMinutes && (totalMinutes - timePassed >= Number(pomoLength))) {
-      timePassed += Number(pomoLength);
-      pomoCount += 1;
-      if ((timePassed + Number(breakLength)) < totalMinutes) {
-        timePassed += Number(breakLength);
-      }
-    }
 
-    return pomoCount;
+    if (breakLength > totalMinutes || pomoLength > totalMinutes) {
+      return [0, 0];
+    } else {
+      while (timePassed < totalMinutes && (totalMinutes - timePassed >= Number(pomoLength)) && Number(pomoLength > 0)) {
+        timePassed += Number(pomoLength);
+        pomoCount += 1;
+        if ((timePassed + Number(breakLength)) < totalMinutes) {
+          timePassed += Number(breakLength);
+        }
+      }
+
+      // !!! some cases where time remaining is off
+      // (e.g. 2:30 duration block will show inaccurate time)
+      const remainder = totalMinutes - timePassed
+      return [pomoCount, remainder];
+    }
   }
 
   setMaxPomos = () => {
@@ -102,12 +108,15 @@ class CreateSchedule extends React.Component {
       const millisecondsBetween = Date.parse(this.state.endTime) - Date.parse(this.state.startTime);
       const minutesBetween = convertMilliToMinutes(millisecondsBetween);
 
-      const maxPomos = this.getMaxPomos(minutesBetween, this.state.pomoLength, this.state.breakLength);
+      const pomosAndRemainder = this.getMaxPomos(minutesBetween, this.state.pomoLength, this.state.breakLength);
+      const maxPomos = pomosAndRemainder[0];
+      const remainder = pomosAndRemainder[1];
 
       this.setState({
         maxPomos: maxPomos,
-        confirmed: true // this is a temporary measure for the 'calculate button'
+        remainder: remainder
       })
+
     }
   }
 
@@ -122,7 +131,7 @@ class CreateSchedule extends React.Component {
     const millisecondsBetween = Date.parse(this.state.endTime) - Date.parse(this.state.startTime);
     const minutesBetween = convertMilliToMinutes(millisecondsBetween);
 
-    const maxPomos = this.getMaxPomos(minutesBetween, this.state.pomoLength, this.state.breakLength);
+    const maxPomos = this.getMaxPomos(minutesBetween, this.state.pomoLength, this.state.breakLength)[0];
 
     const data = {
       startTime: this.state.startTime,
@@ -174,7 +183,7 @@ class CreateSchedule extends React.Component {
   render() {
 
     return (
-      <PrimaryDiv fadeTo='#fb3570'>
+      <PrimaryDiv angle={.6} fadeTo='#fb3570'>
         <form
           style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 2fr', gridTemplateRows: '1fr 1fr 1fr' }}
           onSubmit={this.handleSubmit}
@@ -203,8 +212,6 @@ class CreateSchedule extends React.Component {
                 style={{ width: '100%' }}
                 type='datetime-local'
                 onChange={this.handleStartTime}
-              //defaultValue={}
-              //value={}
               />
             </div>
 
@@ -243,15 +250,10 @@ class CreateSchedule extends React.Component {
             />
           </div>
 
-          {this.state.confirmed ?
-            <div style={{ gridColumnStart: 1 }}>room for {this.state.maxPomos} pomos max</div>
-            :
-            <button
-              type="button"
-              onClick={this.setMaxPomos}
-              style={{ gridColumnStart: 1 }}>
-              calculate (wip)
-            </button>
+          {this.state.maxPomos &&
+            <div style={{ gridColumnStart: 1 }}>room for {this.state.maxPomos} pomos max,
+              w/ {this.state.remainder} minutes to spare</div>
+
           }
 
           <button

@@ -9,6 +9,9 @@ export default function Dashboard() {
   const [goalList, setGoalList] = useState([]);
   const [deadline, setDeadline] = useState("");
   const [deadlineObj, setDeadlineObj] = useState({});
+  //!!!
+  const [userObj, setUserObj] = useState({});
+  const [isPublic, setPublic] = useState(false);
 
   function handleValueSubmit(e) {
     e.preventDefault();
@@ -73,6 +76,19 @@ export default function Dashboard() {
     }
   };
 
+  function handlePublicUpdate(e) {
+    e.preventDefault();
+
+    axios.put(`http://localhost:8082/api/public/${userObj._id}`,
+      { isPublic },
+      {
+        withCredentials: true
+      })
+      .then(res => console.log('changed privacy status'))
+      .catch(err => console.log('could not change privacy status'))
+
+  }
+
   useEffect(() => {
     axios.get('http://localhost:8082/api/values',
       {
@@ -90,6 +106,20 @@ export default function Dashboard() {
         setGoalList(res.data);
       }).catch(err => console.log('couldnt retrieve goals'));
   }, [goal])
+
+
+  useEffect(() => {
+    axios.get('http://localhost:8082/api/',
+      {
+        withCredentials: true
+      }).then(res => {
+        axios.get(`http://localhost:8082/api/users/${res.data}`)
+          .then(res => {
+            setUserObj(res.data);
+            setPublic(res.data.public);
+          })
+      })
+  }, [])
 
 
   useEffect(() => {
@@ -123,12 +153,18 @@ export default function Dashboard() {
       display: 'grid',
       gridColumns: '1fr 1fr',
     }}>
-
+      <h5>{userObj.username}</h5>
       <form style={{ gridColumnStart: 1 }}>
-        <input type='radio' id='public'>
+        <input
+          type='checkbox'
+          id='public'
+          checked={isPublic ? 'checked' : ''}
+          onChange={() => {
+            setPublic(current => !current);
+          }}>
         </input>
         <label style={{ marginRight: 10 }} for='public'>Public</label>
-        <button>Confirm</button>
+        <button onClick={handlePublicUpdate}>Confirm</button>
       </form>
 
       <form onChange={e => setDeadline(e.target.value)} onSubmit={handleDeadlineUpdate} style={{ gridColumnStart: 2 }}>
@@ -210,11 +246,6 @@ export default function Dashboard() {
           <input type="submit" />
         </form>
       </div>
-
-      <div style={{ gridColumnStart: '1' }}>
-        <h1>Schedule Presets</h1>
-      </div>
-
     </div>
   )
 }

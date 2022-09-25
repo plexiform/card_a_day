@@ -179,7 +179,10 @@ export default function DayCardes() {
               }}
             >
               <div>
-                00:00 ➤❚❚  {totalMins[card]} min total
+                {`Start: ${currentSchedules[0].props.children[0].slice(0, 2) > 12 ?
+                  `${currentSchedules[0].props.children[0].slice(0, 2) - 12}:${currentSchedules[0].props.children[0].slice(-2)} PM`
+                  : currentSchedules[0].props.children[0] + ' AM'}
+                ${totalMins[card]} min total`}
               </div>
             </div> : ''
           }
@@ -204,22 +207,24 @@ export default function DayCardes() {
       twelveMonthsObj[thisMonthLabel] =
         (<GridStyle>
           {
-            generateMonthlyCardList(thisMonthDates).cardsList.length > 0 &&
-            <motion.div
-              initial="hide"
-              animate="show"
-              variants={variants}
-            >
+            generateMonthlyCardList(thisMonthDates).cardsList.length > 0 ?
+              <motion.div
+                initial="hide"
+                animate="show"
+                variants={variants}
+              >
 
-              {generateMonthlyCardList(thisMonthDates).cardsList.map((card, i) => (
+                {generateMonthlyCardList(thisMonthDates).cardsList.map((card, i) => (
 
-                <motion.div style={{ display: 'inline-block' }} key={i} variants={item}>
-                  {card}
-                </motion.div>
-              )
-              )}
+                  <motion.div style={{ display: 'inline-block' }} key={i} variants={item}>
+                    {card}
+                  </motion.div>
+                )
+                )}
 
-            </motion.div >
+              </motion.div >
+              :
+              <div><i>No entries this month</i></div>
           }
         </GridStyle>
         )

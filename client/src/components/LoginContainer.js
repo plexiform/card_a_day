@@ -18,8 +18,6 @@ export default function LoginContainer(props) {
       })
   }, [isLoggedIn]);
 
-  console.log('hi from login container', isLoggedIn);
-
   if (isLoggedIn) {
     return (
       <Redirect to='/welcome' />

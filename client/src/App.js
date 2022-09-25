@@ -7,6 +7,7 @@ import CreateRoutine from './components/CreateRoutine';
 import CreateSchedule from './components/CreateSchedule';
 import Login from './components/Login';
 import Register from './components/Register';
+import LoginRegister from './components/LoginRegister';
 import { CredentialsContext } from './context';
 import axios from 'axios';
 import Welcome from './components/Welcome';
@@ -45,7 +46,7 @@ function App() {
         <Router>
           <Switch>
             <Route exact path='/'  >
-              {isLoggedIn ? <Redirect to="/welcome" /> : <Login />}
+              {isLoggedIn ? <Redirect to="/welcome" /> : <LoginRegister />}
             </Route>
 
             <Route exact path='/login'>
@@ -97,13 +98,10 @@ function App() {
               </PrivateRoute>
             </Route>
 
-            <Route path='/:profile'>
+            <Route path='/:profile/:date?'>
               <PublicProfile />
             </Route>
 
-            <Route path='/:profile/:date'>
-              <PublicProfile />
-            </Route>
 
           </Switch>
         </Router>

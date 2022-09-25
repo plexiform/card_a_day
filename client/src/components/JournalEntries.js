@@ -69,7 +69,7 @@ export default function JournalEntries(props) {
         setEntries(res.data);
       })
       .catch(err => alert(err));
-  }, [props.newEntry]);
+  }, [props]);
 
   useEffect(() => {
     axios.get('http://localhost:8082/api/routines',

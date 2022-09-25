@@ -121,7 +121,7 @@ class CreateRoutine extends React.Component {
 
   render() {
     return (
-      <PrimaryDiv fadeTo='orange'>
+      <PrimaryDiv angle={.55} fadeTo='orange'>
         <div style={{ width: '50%' }} className="CreateRoutine ">
           <div style={{ float: 'right' }}>{this.state.date}</div>
           <div>Deadline: {this.state.deadline}
@@ -133,10 +133,10 @@ class CreateRoutine extends React.Component {
               Start your day right.
               <form noValidate onSubmit={this.handleSubmit}>
                 <div>
-                  <input
-                    style={{ width: '100%' }}
+                  <textarea
+                    style={{ width: '100%', color: '#bcbcbc' }}
                     autoComplete="off"
-                    type='text'
+                    contentEditable='99'
                     placeholder='things youre grateful for'
                     name='gratitude'
                     value={this.state.gratitude}
@@ -146,7 +146,7 @@ class CreateRoutine extends React.Component {
 
                 <div
                 >
-                  <span>Values to   : </span>
+                  <span>Values to embody: </span>
                   {
                     this.state.values.map((val, id) => {
                       const value = val.valueAndReason.value;
@@ -169,11 +169,9 @@ class CreateRoutine extends React.Component {
                   }
                 </div>
 
-                {/* !!!*/}
-
                 <div>
                   <textarea
-                    style={{ width: '100%', height: '100px', border: '1 solid white' }}
+                    style={{ width: '100%', height: '100px', border: '1 solid white', color: '#bcbcbc' }}
                     autocomplete="off"
                     placeholder='why are you focusing on these values today?'
                     name='value_affirmation'

@@ -7,6 +7,7 @@ export default function Analytics() {
   const [goalNames, setGoalNames] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isSorted, setIsSorted] = useState(false);
+  const [routines, setRoutines] = useState([]);
 
   useEffect(() => {
     axios.get('http://localhost:8082/api/goals', { withCredentials: true })
@@ -15,6 +16,11 @@ export default function Analytics() {
         setIsLoading(false);
       })
       .catch(err => console.log(err))
+
+    axios.get(`http://localhost:8082/api/routines/`, { withCredentials: true })
+      .then(res => {
+        setRoutines(res.data);
+      })
   }, [])
 
   useEffect(() => {
@@ -33,12 +39,15 @@ export default function Analytics() {
           .catch(err => console.log(err))
       })
     });
-
   }, [isLoading, isSorted]);
 
   return (
     <>
-      {!isLoading ? <BlockAnalysis isLoading={isLoading} goalNames={goalNames} /> : <>Loading</>}
+      {!isLoading ? <BlockAnalysis
+        isLoading={isLoading}
+        goalNames={goalNames}
+        routines={routines}
+      /> : <>Loading</>}
     </>
   )
 }

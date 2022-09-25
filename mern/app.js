@@ -9,6 +9,7 @@ const values = require('./routes/api/values');
 const goals = require('./routes/api/goals');
 const journals = require('./routes/api/journals');
 const deadlines = require('./routes/api/deadlines');
+const public = require('./routes/api/public');
 
 const User = require('./models/User');
 const cookieParser = require('cookie-parser');
@@ -50,10 +51,11 @@ app.use('/api/values', values);
 app.use('/api/goals', goals);
 app.use('/api/deadlines', deadlines);
 app.use('/api/journals', journals); // access to journals + threeGoodThings entries
+app.use('/api/public', public);
 
 // changed '/' to '/api' to prevent conflict on heroku
 app.get('/api', (req, res) => {
-  //console.log('id:', req.session)
+
   if (req.session.userId) {
     res.json(req.session.userId);
   } else {
@@ -206,8 +208,6 @@ app.post('/login', async (req, res) => {
 app.post('/logout', (req, res) => {
   req.session.destroy();
   res.end();
-  //res.redirect('/login');
-  //console.log('AFTER:', req.session);
 });
 
 app.post('/register', async (req, res) => {
