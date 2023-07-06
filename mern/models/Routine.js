@@ -30,6 +30,9 @@ const RoutineSchema = new mongoose.Schema({
     date: {
       type: Date,
       default: Date.now
+    },
+    deadline: {
+      type: String
     }
   }
 });

@@ -24,7 +24,7 @@ export default function EndDay() {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:8082/api/routines',
+    axios.get('/api/routines',
       {
         withCredentials: true
       }).then(res => {
@@ -55,7 +55,7 @@ export default function EndDay() {
   const submitJournal = e => {
     e.preventDefault();
 
-    axios.post('http://localhost:8082/api/journals/journal', { journalEntry, values: taggedValues },
+    axios.post('/api/journals/journal', { journalEntry, values: taggedValues },
       {
         withCredentials: true
       })

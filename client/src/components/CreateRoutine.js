@@ -28,7 +28,7 @@ class CreateRoutine extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:8082/api/values', {
+    axios.get('/api/values', {
       withCredentials: true
     }).then(res => {
       this.setState({
@@ -38,7 +38,7 @@ class CreateRoutine extends React.Component {
       console.log(err);
     });
 
-    axios.get('http://localhost:8082/api/deadlines', {
+    axios.get('/api/deadlines', {
       withCredentials: true
     }).then(res => {
       this.setState({
@@ -91,12 +91,13 @@ class CreateRoutine extends React.Component {
       type_of_meditation: this.state.type_of_meditation,
       minutes_spent: this.state.minutes_spent,
       date: this.state.date,
-      completed_fast: this.state.completed_fast
+      completed_fast: this.state.completed_fast,
+      deadline: this.state.deadline
     };
 
     //console.log(this.context[0].username);
     axios
-      .post('http://localhost:8082/api/routines', data,
+      .post('/api/routines', data,
         {
           headers: {
             'Authorization': `Basic ${this.context[0].username}:${this.context[0].password}`

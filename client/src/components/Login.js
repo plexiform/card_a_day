@@ -8,7 +8,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [, setCredentials] = useContext(CredentialsContext);
 
-  axios.get('http://localhost:8082/api', {
+  axios.get('/api', {
     headers: {
       'Content-Type': 'application/json'
     },
@@ -20,7 +20,7 @@ export default function Login() {
   const login = (e) => {
     if (username && password) {
       e.preventDefault();
-      axios.post('http://localhost:8082/login',
+      axios.post('/login',
         {
           username,
           password

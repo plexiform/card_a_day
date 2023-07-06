@@ -16,13 +16,11 @@ export default function BlockAnalysis({ goalNames, isSorted, routines }) {
   };
 
   const generateMins = () => {
-    const convNan = (num) => num || 0;
-
     Object.keys(goalNames).forEach((goal) => {
       goalNames[goal].forEach((sched) => {
         if (sched) {
           if (!goalMinutes[goal]) {
-            goalMinutes[goal] = convNan(goalMinutes[goal])
+            goalMinutes[goal] = 0;
           }
 
           goalMinutes[goal] += (sched.timeBlock.numPomos * sched.timeBlock.pomoLength)

@@ -50,7 +50,7 @@ export default function ThreeGoodThings() {
   const submitThreeGoodThings = e => {
     e.preventDefault();
 
-    axios.post('http://localhost:8082/api/journals/threegoodthings',
+    axios.post('/api/journals/threegoodthings',
       {
         first: {
           goodThing: threeGoodThings.firstGoodThing,
@@ -91,7 +91,7 @@ export default function ThreeGoodThings() {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:8082/api/journals/threegoodthings/' + today,
+    axios.get('/api/journals/threegoodthings/' + today,
       {
         withCredentials: true
       }).then(res => {

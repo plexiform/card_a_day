@@ -77,7 +77,7 @@ export default function PublicProfile({ username }) {
   }
 
   useEffect(() => {
-    axios.get(`http://localhost:8082/api/users/${profile}`,
+    axios.get(`/api/users/${profile}`,
       {
         withCredentials: true
       }).then(res => {
@@ -86,18 +86,18 @@ export default function PublicProfile({ username }) {
 
         if (isPublic) {
 
-          axios.get(`http://localhost:8082/api/journals/entries/${profile}`)
+          axios.get(`/api/journals/entries/${profile}`)
             .then(res => {
               setEntries(res.data)
             })
 
 
-          axios.get(`http://localhost:8082/api/routines/${profile}`)
+          axios.get(`/api/routines/${profile}`)
             .then(res => {
               setRoutines(res.data);
             })
 
-          axios.get(`http://localhost:8082/api/schedules/u/${profile}`)
+          axios.get(`/api/schedules/u/${profile}`)
             .then(res => {
               setSchedules(res.data);
 

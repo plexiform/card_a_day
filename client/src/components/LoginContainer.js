@@ -6,8 +6,9 @@ import Login from './Login';
 export default function LoginContainer(props) {
   const [isLoggedIn, setLog] = useState(false);
   const [isLoading, setLoad] = useState(true);
+
   useEffect(() => {
-    axios.get('http://localhost:8082/api',
+    axios.get('/api',
       {
         withCredentials: true
       }).then((res) => {

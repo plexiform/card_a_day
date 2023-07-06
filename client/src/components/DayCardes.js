@@ -58,7 +58,7 @@ export default function DayCardes() {
   const [trigger, setTrigger] = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost:8082/api/cards',
+    axios.get('/api/cards',
       {
         withCredentials: true
       }).then((res) => {

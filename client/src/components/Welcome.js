@@ -12,7 +12,7 @@ export default function Welcome() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:8082/api', { withCredentials: true })
+    axios.get('/api', { withCredentials: true })
       .then(res => {
         setUser(res.data);
         setIsLoading(false);

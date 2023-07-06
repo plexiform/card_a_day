@@ -37,7 +37,7 @@ export default function Morning(props) {
   return (
     <div>
       <ExpanderStyle onClick={() => setCollapsed(!collapsed)}>
-        + Routine
+        Routine ({routine.deadline})
         <MeditationSquare>
           {routine.type_of_meditation[0]}
           {routine.minutes_spent} /

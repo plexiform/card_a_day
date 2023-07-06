@@ -10,14 +10,14 @@ export default function Analytics() {
   const [routines, setRoutines] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8082/api/goals', { withCredentials: true })
+    axios.get('/api/goals', { withCredentials: true })
       .then(res => {
         setGoals(res.data);
         setIsLoading(false);
       })
       .catch(err => console.log(err))
 
-    axios.get(`http://localhost:8082/api/routines/`, { withCredentials: true })
+    axios.get(`/api/routines/`, { withCredentials: true })
       .then(res => {
         setRoutines(res.data);
       })
@@ -28,7 +28,7 @@ export default function Analytics() {
 
     goals.forEach(goal => {
       goal.goalTags.forEach(schedID => {
-        axios.get(`http://localhost:8082/api/schedules/${schedID}`)
+        axios.get(`/api/schedules/${schedID}`)
           .then(res => {
             setGoalNames(prevState => ({
               ...prevState,

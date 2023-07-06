@@ -15,7 +15,7 @@ export default function Dashboard() {
 
   function handleValueSubmit(e) {
     e.preventDefault();
-    axios.post('http://localhost:8082/api/values',
+    axios.post('/api/values',
       {
         value: value,
         reason: valueReason
@@ -33,7 +33,7 @@ export default function Dashboard() {
   function handleGoalSubmit(e) {
     e.preventDefault();
 
-    axios.post('http://localhost:8082/api/goals',
+    axios.post('/api/goals',
       {
         goal: goal
       },
@@ -62,7 +62,7 @@ export default function Dashboard() {
       )
 
     } else {
-      axios.put('http://localhost:8082/api/deadlines/' + deadlineObj._id,
+      axios.put('/api/deadlines/' + deadlineObj._id,
         {
           deadline
         },
@@ -79,7 +79,7 @@ export default function Dashboard() {
   function handlePublicUpdate(e) {
     e.preventDefault();
 
-    axios.put(`http://localhost:8082/api/public/${userObj._id}`,
+    axios.put(`/api/public/${userObj._id}`,
       { isPublic },
       {
         withCredentials: true
@@ -90,7 +90,7 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:8082/api/values',
+    axios.get('/api/values',
       {
         withCredentials: true
       }).then(res => {
@@ -99,7 +99,7 @@ export default function Dashboard() {
   }, [value]);
 
   useEffect(() => {
-    axios.get('http://localhost:8082/api/goals',
+    axios.get('/api/goals',
       {
         withCredentials: true
       }).then(res => {
@@ -109,11 +109,11 @@ export default function Dashboard() {
 
 
   useEffect(() => {
-    axios.get('http://localhost:8082/api/',
+    axios.get('/api/',
       {
         withCredentials: true
       }).then(res => {
-        axios.get(`http://localhost:8082/api/users/${res.data}`)
+        axios.get(`/api/users/${res.data}`)
           .then(res => {
             setUserObj(res.data);
             setPublic(res.data.public);
@@ -123,7 +123,7 @@ export default function Dashboard() {
 
 
   useEffect(() => {
-    axios.get('http://localhost:8082/api/deadlines',
+    axios.get('/api/deadlines',
       {
         withCredentials: true
       }).then(res => {
@@ -133,7 +133,7 @@ export default function Dashboard() {
   }, [])
 
   function handleDelete(id) {
-    axios.delete('http://localhost:8082/api/values/' + id)
+    axios.delete('/api/values/' + id)
       .then(res => {
 
       })

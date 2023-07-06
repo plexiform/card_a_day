@@ -61,7 +61,7 @@ export default function JournalEntries(props) {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:8082/api/journals/entries',
+    axios.get('/api/journals/entries',
       {
         withCredentials: true
       })
@@ -72,7 +72,7 @@ export default function JournalEntries(props) {
   }, [props]);
 
   useEffect(() => {
-    axios.get('http://localhost:8082/api/routines',
+    axios.get('/api/routines',
       {
         withCredentials: true
       }).then(res => {
