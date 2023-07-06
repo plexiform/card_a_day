@@ -189,7 +189,7 @@ export default function PublicProfile({ username }) {
                       return (
                         <div
                           key={id}
-                          style={{ backgroundColor: 'lightgray' }}
+
                         >
                           {`
                           ${splitDate(sched.timeBlock.startTime)[1]} to
@@ -197,7 +197,7 @@ export default function PublicProfile({ username }) {
                           `
                           }
 
-                          {`sched.numPomos/sched.maxPomos`}
+                          {sched.numPomos / sched.maxPomos}
 
                         </div>
                       )
