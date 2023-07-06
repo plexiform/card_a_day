@@ -189,13 +189,15 @@ export default function PublicProfile({ username }) {
                       return (
                         <div
                           key={id}
-                          style={{ backgroundColor: 'red' }}
+                          style={{ backgroundColor: 'lightgray' }}
                         >
                           {`
                           ${splitDate(sched.timeBlock.startTime)[1]} to
                           ${splitDate(sched.timeBlock.endTime)[1]}
                           `
                           }
+
+                          {`sched.numPomos/sched.maxPomos`}
 
                         </div>
                       )
